@@ -39,6 +39,7 @@ import Location0 from '../screens/location0';
 import Location1 from '../screens/location1';
 import Location2 from '../screens/location2';
 import BottomTabs from '../screens/bottomtabs';
+import Tinder from '../screens/tinder';
 
 const Drawer = createDrawerNavigator();
 
@@ -190,18 +191,19 @@ const AppStack = () => {
             ),
           }}
         /> */}
-        {/* <Drawer.Screen
-          name="Location0"
-          component={Location0}
+    
+           <Drawer.Screen
+          name="tinder"
+          component={Tinder}
           options={{
             drawerIcon: ({ color }) => (
               <Ionicons name="person-outline" size={22} color={color} />
             ),
           }}
-        /> */}
-           <Drawer.Screen
-          name="bottomtabs"
-          component={BottomTabs}
+        />
+            <Drawer.Screen
+          name="Location0"
+          component={Location0}
           options={{
             drawerIcon: ({ color }) => (
               <Ionicons name="person-outline" size={22} color={color} />
