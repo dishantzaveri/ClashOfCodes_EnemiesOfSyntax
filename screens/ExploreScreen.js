@@ -27,7 +27,7 @@ const CARD_HEIGHT = 220;
 const CARD_WIDTH = width * 0.8;
 const SPACING_FOR_CARD_INSET = width * 0.1 - 10;
 
-const ExploreScreen = () => {
+const ExploreScreen = ({navigation}) => {
   const theme = useTheme();
 
   const initialMapState = {
@@ -216,6 +216,7 @@ const ExploreScreen = () => {
         )}
       >
         {state.markers.map((marker, index) =>(
+          <TouchableOpacity onPress={() =>navigation.navigate("Profile2")}>
           <View style={styles.card} key={index}>
             <Image 
               source={marker.image}
@@ -241,6 +242,7 @@ const ExploreScreen = () => {
               </View>
             </View>
           </View>
+          </TouchableOpacity>
         ))}
       </Animated.ScrollView>
     </View>

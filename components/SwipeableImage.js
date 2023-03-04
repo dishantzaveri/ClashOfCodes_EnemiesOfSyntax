@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Image, StyleSheet, Text } from 'react-native'
-import { FontAwesome } from 'react-native-vector-icons/Ionicons'
+import FontAwesome, { SolidIcons, RegularIcons, BrandIcons } from 'react-native-fontawesome';
 
 export default function SwipeableImage({ user, willLike, willPass }) {
   return (

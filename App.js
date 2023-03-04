@@ -32,6 +32,11 @@ import store from './redux/store';
 import { CometChat } from '@cometchat-pro/react-native-chat';
 import Blogs from './screens/Blogs';
 import OpenBlogScreen from './screens/OpenBlogScreen';
+import Profile from './components/Profile';
+import Profile1 from './components/Profile1';
+import Profile2 from './components/Profile2';
+import Profile3 from './components/Profile3';
+import Face from './screens/face';
 const app_id = '231614ce9c90ad83';
 const region = 'us';
 const appSetting = new CometChat.AppSettingsBuilder()
@@ -117,6 +122,31 @@ const App = () => {
 				<Stack.Screen
 					name="Details"
 					component={Details}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Profile"
+					component={Profile}
+					options={{ headerShown: false }}
+				/>
+					<Stack.Screen
+					name="Profile1"
+					component={Profile1}
+					options={{ headerShown: false }}
+				/>
+					<Stack.Screen
+					name="Profile2"
+					component={Profile2}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="Profile3"
+					component={Profile3}
+					options={{ headerShown: false }}
+				/>
+				<Stack.Screen
+					name="face"
+					component={Face}
 					options={{ headerShown: false }}
 				/>
 				<BlogStack.Screen
