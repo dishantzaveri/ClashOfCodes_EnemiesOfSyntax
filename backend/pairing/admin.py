@@ -4,12 +4,12 @@ from .models import *
 # Register your models here.
 class TripDetailAdmin(admin.ModelAdmin):
     model = TripDetail
-    list_display = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget']
-    list_filter = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget']
-    fields = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget']
+    list_display = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget', 'cluster']
+    list_filter = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget', 'cluster']
+    fields = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget', 'cluster']
 
-    search_fields = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget']
-    ordering = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget']
+    search_fields = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget', 'cluster']
+    ordering = ['user', 'origin_loc', 'destination', 'start_date', 'end_date', 'transport', 'company', 'trip_type', 'budget', 'cluster']
     filter_horizontal = ()
 
 

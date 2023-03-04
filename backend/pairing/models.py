@@ -1,5 +1,6 @@
 from django.db import models
 from accounts.models import User
+import datetime
 
 
 class TripDetail(models.Model):
@@ -19,3 +20,6 @@ class UserDetail(models.Model):
     food_pref = models.CharField(max_length = 20, blank=True)
     dob = models.DateField(blank=True, null=True)
     sex = models.CharField(max_length = 10, blank=True)
+
+    def age(self):
+        return datetime.date.today() - self.dob

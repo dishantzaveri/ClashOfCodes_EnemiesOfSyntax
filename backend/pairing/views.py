@@ -4,6 +4,7 @@ from .models import *
 from django.http.response import JsonResponse
 from rest_framework import status,permissions
 from rest_framework.generics import GenericAPIView, ListAPIView
+from .utils import *
 
 
 class TripDetailPOSTAPI(GenericAPIView):
@@ -49,3 +50,13 @@ class UserDetailAPI(GenericAPIView):
         serializer = self.serializer_class(obj)
         data = serializer.data
         return JsonResponse({"message": "success", "data": data}, status=status.HTTP_200_OK)
+
+class TripDetailClusterAPI(ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = TripDetailClusterSerializer
+
+    def get_queryset(self):
+        id=self.kwargs.get('pk')
+        cluster1 = cluster(id)
+        print(cluster1)
+        return TripDetail.objects.filter(cluster = cluster1).exclude(id=id)
