@@ -5,6 +5,9 @@ import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CometChat } from "@cometchat-pro/chat";
 import { COMETCHAT_CONSTANTS } from "./constants";
+import "./i18n"
+
+
 
 const appID = COMETCHAT_CONSTANTS.APP_ID;
 const region = COMETCHAT_CONSTANTS.REGION;

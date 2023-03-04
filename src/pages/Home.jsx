@@ -16,9 +16,13 @@ import Swal from "sweetalert2";
 import { Dialog, Transition } from '@headlessui/react'
 import L from "leaflet"
 import mark from "../assets/images/markers.png"
+import { useTranslation } from 'react-i18next'
+
 
 
 const Card = ({ data }) => {
+  const { t } = useTranslation();
+
   const [open, setOpen] = useState(false)
   const [center, setCenter] = useState({
     lat: 13.084,
@@ -31,7 +35,7 @@ const Card = ({ data }) => {
     iconAnchor: [17, 46],
     popupAnchor: [3, -46]
 
-})
+  })
 
 
   const cancelButtonRef = useRef(null)
@@ -45,7 +49,7 @@ const Card = ({ data }) => {
       />
       <div className="px-4 py-6">
         <h1 className="text-gray-600 text-xl font-bold mb-2">
-          {data.name}
+          {t(data.name)}
         </h1>
         <h1 className="text-gray-400 text-sm mb-4 flex items-center gap-2">
           <HiOutlineLocationMarker className="text-lg" /> {data.venue.location}
@@ -72,7 +76,7 @@ const Card = ({ data }) => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"  style={{width:"700px"}}>
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg" style={{ width: "700px" }}>
                   <MapContainer center={center} zoom="12">
                     <TileLayer url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=3DHOohQB1Ufdr3SDSGbf" ></TileLayer>
                     <Marker
@@ -102,6 +106,7 @@ const Home = () => {
   const [startDate, setStartDate] = useState(new Date());
   const [packages, setPackages] = useState([])
   const user = JSON.parse(localStorage.getItem("user"));
+  const { t } = useTranslation();
 
   const [theme, setTheme] = useState("purple")
   useEffect(() => {
@@ -149,15 +154,14 @@ const Home = () => {
       <Navbar color={theme} />
       <div data-aos="zoom-in-up" className="flex flex-col items-center py-24 px-60 gap-6">
         <h1 className="text-6xl text-gray-800 font-bold text-center leading-snug">
-          Explore the world with your perfect travel companion
+          {t("heading_main")}
         </h1>
         <h1 className="text-xl text-gray-500 font-medium text-center leading-normal">
-          Join our community of adventurous singles and start your next journey
-          together!
+          {t("Join our community of adventurous singles and start your next journey together!")}
         </h1>
         <Link to="/register" className="">
           <button className={`text-gray-100 text-lg px-10 py-6  ${theme == 'emerald' ? "bg-emerald-500" : theme == 'amber' ? "bg-amber-500" : theme == 'sky' ? "bg-sky-500" : "bg-purple-500"} rounded-full`}>
-            Get Started
+            {t("getstarted")}
           </button>
         </Link>
         <h2 className="mt-36 font-bold text-3xl p-5">Select your theme : </h2>

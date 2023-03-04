@@ -14,6 +14,7 @@ import "aos/dist/aos.css";
 import Itinerary from "./pages/Itinerary";
 import Pairing from "./pages/Pairing";
 
+
 function App() {
   useEffect(() => {
     Aos.init({ duration: 500, once: false });
