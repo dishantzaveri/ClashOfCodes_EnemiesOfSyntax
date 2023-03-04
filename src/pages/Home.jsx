@@ -173,6 +173,7 @@ const Home = () => {
   const { t } = useTranslation();
 
   const [theme, setTheme] = useState("emerald");
+  localStorage.setItem("color",theme);
   useEffect(() => {
     CometChat.getLoggedinUser().then(
       (user) => {
@@ -267,11 +268,10 @@ const Home = () => {
           className="flex flex-col items-center py-36 px-60 gap-6 h-full"
         >
           <h1 className="text-6xl text-gray-100 font-bold text-center leading-snug">
-            Explore the world with your perfect travel companion
+            {t("heading_main")}
           </h1>
           <h1 className="text-xl text-gray-300 font-medium text-center leading-normal">
-            Join our community of adventurous singles and start your next
-            journey together!
+            {t("Join our community of adventurous singles and start your next journey together!")}
           </h1>
           <Link to="/register" className="">
             <button
@@ -289,7 +289,7 @@ const Home = () => {
                   : "bg-purple-500"
               } rounded-full`}
             >
-              Get Started
+              {t("getstarted")}
             </button>
           </Link>
         </div>

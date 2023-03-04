@@ -12,7 +12,7 @@ function classNames(...classes) {
 
 
 
-export const Navbar = ({ color }) => {
+export const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation()
   console.log(location.pathname)
@@ -21,7 +21,7 @@ export const Navbar = ({ color }) => {
     localStorage.removeItem("token");
     navigate("/");
   };
-
+  var color = localStorage.getItem("color")
   const numbers = [
     { val: 'en', text: "English" }, { val: 'hi', text: "हिन्दी" },
     { val: 'en', text: "অসমীয়া" }, { val: 'bn', text: "বাংলা" },
@@ -64,10 +64,10 @@ export const Navbar = ({ color }) => {
           {t("tripright")}
         </h1>
       </div>
-      <div className="flex gap-12 items-center">
+      <div className="flex gap-10 items-center">
         <Link to="/" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
+            className={`font-semibold text-lg text-gray-${
               location.pathname === "/" ? "900" : "700"
             }`}
           >
@@ -79,7 +79,7 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/profile" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
+            className={`font-semibold text-lg text-gray-${
               location.pathname === "/profile" ? "900" : "700"
             }`}
           >
@@ -91,7 +91,7 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/home" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
+            className={`font-semibold text-lg text-gray-${
               location.pathname === "/home" ? "900" : "700"
             }`}
           >
@@ -103,7 +103,7 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/itinerary" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
+            className={`font-semibold text-lg text-gray-${
               location.pathname === "/itinerary" ? "900" : "700"
             }`}
           >
@@ -115,17 +115,17 @@ export const Navbar = ({ color }) => {
         </Link>
       </div>
       {user ? (
-        <div className="flex gap-12 items-center">
+        <div className="flex gap-4 items-center">
           <button
             onClick={() => logout()}
-            className={`text-gray-100 px-8 py-4 bg-${color}-500 rounded-full`}
+            className={`text-gray-100 text-sm px-8 py-4 bg-${color}-500 rounded-full`}
           >
             {t("logout")}
           </button>
           <Menu as="div" className="relative inline-block text-left">
             <div>
               <Menu.Button
-                className={`text-gray-100 px-8 py-4 bg-${color}-500 rounded-full`}
+                className={`text-gray-100 text-sm px-8 py-4 bg-${color}-500 rounded-full`}
               >
                 lang <MdOutlineLanguage className="inline" />
               </Menu.Button>
@@ -174,7 +174,7 @@ export const Navbar = ({ color }) => {
           </Link>
           <Link to="register">
             <button
-              className={`text-gray-100 px-8 py-4 bg-${color}-500 rounded-full`}
+              className={`text-gray-100 px-8 py-4 text-sm bg-${color}-500 rounded-full`}
             >
               {t("Register")}
             </button>
