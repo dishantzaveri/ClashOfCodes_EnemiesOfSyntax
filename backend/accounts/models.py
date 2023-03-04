@@ -40,7 +40,7 @@ class User(AbstractUser):
     # extra fields
     email = models.EmailField(primary_key=True)
     name = models.CharField(max_length = 30)
-    phone_no = models.CharField(max_length = 10)
+    phone_no = models.CharField(max_length = 10, blank=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS=[]
