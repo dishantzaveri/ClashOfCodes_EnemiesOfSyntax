@@ -50,7 +50,8 @@ function PrintMap() {
 
 
 const Maps = () => {
-
+    
+    
     const [center, setCenter] = useState({
         lat: 13.084,
         lng: 80.24
@@ -112,79 +113,73 @@ const Maps = () => {
 
     // const  create
     return (
-        <>
+      <>
+        {/* <Header title="React Leaflet Map Example" /> */}
 
-            {/* <Header title="React Leaflet Map Example" /> */}
+        {/* <ExternalInfo page="leafletBasic" /> */}
 
-            {/* <ExternalInfo page="leafletBasic" /> */}
+        <div className="relative w-full h-full flex flex-col gap-4 items-center">
+          <MapContainer center={center} zoom={zoomLevel} ref={mapRef}>
+            <PrintMap />
+            <FeatureGroup>
+              <EditControl
+                onCreated={onCreated}
+                onEdited={onEdited}
+                draw={{
+                  rectangle: false,
+                  circle: false,
+                  polygon: {
+                    allowIntersection: false,
+                    drawError: {
+                      color: "#e1e100",
+                      message: "Invalid shape",
+                    },
+                    shapeOptions: {
+                      color: "#97009c",
+                    },
+                  },
+                }}
+                position="topright"
+              />
+            </FeatureGroup>
+            <TileLayer url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=3DHOohQB1Ufdr3SDSGbf"></TileLayer>
+            <Marker position={[13.084, 80.24]} icon={markerIcon}>
+              <Popup>
+                <b>Live location</b>
+              </Popup>
+            </Marker>
 
-            <div className="grid-cols-2 ">
-                <div className="text-center">
-                    <h2>React-leaflet - Basic Openstreet Maps</h2>
-                    <p>Loading basic map using layer from maptiler</p>
-                </div>
-                <button onClick={showMyLocation}>
-                    Locate Me
-                </button>
-                <center>
-                    <MapContainer center={center} zoom={zoomLevel} ref={mapRef}>
-                        <PrintMap />
-                        <FeatureGroup>
-                            <EditControl
-                                onCreated={onCreated}
-                                onEdited={onEdited}
-                                draw={{
-                                    rectangle: false,
-                                    circle: false,
-                                    polygon: {
-                                        allowIntersection: false,
-                                        drawError: {
-                                            color: "#e1e100",
-                                            message: "Invalid shape",
-                                        },
-                                        shapeOptions: {
-                                            color: "#97009c",
-                                        },
-                                    },
-                                }}
-
-                                position='topright' />
-                        </FeatureGroup>
-                        <TileLayer url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=3DHOohQB1Ufdr3SDSGbf" ></TileLayer>
-                        <Marker position={[13.084, 80.24]} icon={markerIcon} >
-                            <Popup>
-                                <b>Live location</b>
-                            </Popup>
-                        </Marker>
-
-                        {data.map((i, id) => {
-                            return <Marker
-                                position={[i.lat, i.lng]} icon={markerIcon} key={id}>
-                                <Popup>
-                                    <b>{i.city} {i.country}</b>
-                                </Popup>
-                            </Marker>
-                        })}
-                        {location.loaded && !location.error && (
-                            <Marker
-                                icon={markerIcon2}
-                                position={[
-                                    location.coordinates.lat,
-                                    location.coordinates.lng,
-                                ]}
-                            >
-                                <Popup>
-                                    <b>My location</b>
-                                </Popup>
-                            </Marker>
-                        )}
-                    </MapContainer>
-
-                </center>
-            </div>
-        </>
-
-    )
+            {data.map((i, id) => {
+              return (
+                <Marker position={[i.lat, i.lng]} icon={markerIcon} key={id}>
+                  <Popup>
+                    <b>
+                      {i.city} {i.country}
+                    </b>
+                  </Popup>
+                </Marker>
+              );
+            })}
+            {location.loaded && !location.error && (
+              <Marker
+                icon={markerIcon2}
+                position={[location.coordinates.lat, location.coordinates.lng]}
+              >
+                <Popup>
+                  <b>My location</b>
+                </Popup>
+              </Marker>
+            )}
+          </MapContainer>
+          <button
+            className="bg-gray-900 text-emerald-100 text-center px-4 py-2 rounded-xl shadow-lg"
+            onClick={showMyLocation}
+          >
+            Show my location
+          </button>
+        </div>
+      </>
+    );
 }
 
 export default Maps

@@ -11,7 +11,7 @@ export const Navbar = ({ color }) => {
     navigate("/");
   };
   return (
-    <div className="w-full flex px-36 py-4 justify-between items-center">
+    <div className="w-full flex px-24 py-4 justify-between items-center">
       <div className="flex items-center gap-2">
         <img className="w-8" src={logo} alt="" />
         <h1 className={`text-2xl font-bold underline decoration-${color}-500`}>
@@ -39,6 +39,30 @@ export const Navbar = ({ color }) => {
           </h1>
           {location.pathname === "/profile" && (
             <div className={`bg-${color}-500 w-4 h-1 rounded`}></div>
+          )}
+        </Link>
+        <Link to="/home" className="flex flex-col items-center">
+          <h1
+            className={`font-semibold text-gray-${
+              location.pathname === "/home" ? "900" : "700"
+            }`}
+          >
+            Chat
+          </h1>
+          {location.pathname === "/home" && (
+            <div className="bg-emerald-500 w-4 h-1 rounded"></div>
+          )}
+        </Link>
+        <Link to="/itinerary" className="flex flex-col items-center">
+          <h1
+            className={`font-semibold text-gray-${
+              location.pathname === "/itinerary" ? "900" : "700"
+            }`}
+          >
+            Itinerary
+          </h1>
+          {location.pathname === "/itinerary" && (
+            <div className="bg-emerald-500 w-4 h-1 rounded"></div>
           )}
         </Link>
       </div>

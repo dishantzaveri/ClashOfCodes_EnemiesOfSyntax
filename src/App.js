@@ -11,6 +11,8 @@ import { ALAN_API } from "./constants";
 import Chat from "./pages/Chat";
 import Aos from "aos";
 import "aos/dist/aos.css";
+import Itinerary from "./pages/Itinerary";
+import Pairing from "./pages/Pairing";
 
 function App() {
   useEffect(() => {
@@ -35,6 +37,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/itinerary" element={<Itinerary />} />
+        <Route path="/pairing" element={<Pairing />} />
         {/* <Route path="/search" element={<Search />} /> */}
         <Route path="/package/:id" element={<Package />} />
         <Route path="/maps" element={<Maps/>} />
