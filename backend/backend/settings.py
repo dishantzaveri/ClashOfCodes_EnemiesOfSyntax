@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'pairing',
     'location',
     'chatgpt',
+    'scraper',
 ]
 
 MIDDLEWARE = [
