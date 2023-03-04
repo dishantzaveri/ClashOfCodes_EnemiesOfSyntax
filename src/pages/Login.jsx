@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import logo from "../assets/images/logo.png";
+import { CometChat } from '@cometchat-pro/chat';
+import { COMETCHAT_CONSTANTS } from '../constants';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,7 +21,7 @@ const Login = () => {
     var data = new FormData();
     data.append("email", user.email);
     data.append("password", user.password);
-
+    const uuid = user.email.split("@")[0];
     var config = {
       method: "post",
       url: "http://coceos.pythonanywhere.com/accounts/login/",
@@ -30,6 +32,14 @@ const Login = () => {
       .then(function (response) {
         console.log(response)
         localStorage.setItem("token", response.data.token);
+        CometChat.login(uuid, COMETCHAT_CONSTANTS.AUTH_KEY).then(
+          (user) => {
+            console.log("Login Successful:", { user });
+          },
+          (error) => {
+            console.log("Login failed with exception:", { error });
+          }
+        );
         navigate('/')
       })
       .catch(function (error) {

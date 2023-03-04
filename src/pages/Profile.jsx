@@ -8,7 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const Card = ({ data, setPackages }) => {
-  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   const deletePackage = () => {
     var config = {
       method: "delete",
@@ -18,7 +18,7 @@ const Card = ({ data, setPackages }) => {
         data.id +
         "/",
       headers: {
-        Authorization: "Token " + user.token,
+        Authorization: "Token " + token,
       },
     };
 
@@ -46,7 +46,7 @@ const Card = ({ data, setPackages }) => {
       method: "get",
       url: "http://vismayvora.pythonanywhere.com/tourist_app/tourpackage",
       headers: {
-        Authorization: "Token " + user.token,
+        Authorization: "Token " + token,
       },
     };
 
@@ -97,7 +97,7 @@ const Profile = () => {
   const [addPackage, setAddPackage] = useState(false);
   const [edit, setEdit] = useState(false);
   const [packages, setPackages] = useState([]);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("token");
   const [profile, setProfile] = useState(null);
   useEffect(() => {
     getProfile();
@@ -151,7 +151,7 @@ const Profile = () => {
       method: "get",
       url: "http://vismayvora.pythonanywhere.com/account/profile",
       headers: {
-        Authorization: "Token " + user.token,
+        Authorization: "Token " + token,
       },
     };
     axios(config)
@@ -168,7 +168,7 @@ const Profile = () => {
       method: "get",
       url: "http://vismayvora.pythonanywhere.com/tourist_app/tourpackage",
       headers: {
-        Authorization: "Token " + user.token,
+        Authorization: "Token " + token,
       },
     };
 
@@ -200,7 +200,7 @@ const Profile = () => {
         method: "post",
         url: "http://vismayvora.pythonanywhere.com/tourist_app/tourpackage",
         headers: {
-          Authorization: "Token " + user.token,
+          Authorization: "Token " + token,
         },
         data: data,
       };
@@ -230,7 +230,7 @@ const Profile = () => {
       method: "patch",
       url: "http://vismayvora.pythonanywhere.com/account/profile/",
       headers: {
-        Authorization: "Token " + user.token,
+        Authorization: "Token " + token,
       },
       data: profile,
     };
@@ -249,7 +249,7 @@ const Profile = () => {
     <div className="w-full">
       <Navbar />
       <ToastContainer />
-      <div className="px-36 py-8 bg-gradient-to-r from-cyan-400 to-blue-800">
+      {/* <div className="px-36 py-8 bg-gradient-to-r from-cyan-400 to-blue-800">
         <h1 className="text-2xl text-gray-600 font-bold">Profile</h1>
         <div className="flex justify-between bg-white rounded-lg shadow-lg p-6 mt-4">
           <div className="">
@@ -456,7 +456,7 @@ const Profile = () => {
             </button>
           </div>
         </div>
-      </Modal>
+      </Modal> */}
     </div>
   );
 };

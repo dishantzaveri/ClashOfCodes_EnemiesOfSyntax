@@ -3,16 +3,17 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
-import Search from "./pages/Search";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import { useEffect } from "react";
 import Package from "./pages/Package";
 import Maps from "./pages/Maps";
+import { ALAN_API } from "./constants";
+import Chat from "./pages/Chat";
 
 function App() {
   useEffect(() => {
     alanBtn({
-      key: "86e893def59fa09ea3ab18c2643b5c9e2e956eca572e1d8b807a3e2338fdd0dc/stage",
+      key: ALAN_API,
       onCommand: (commandData) => {
         if (commandData.command === "go:back") {
           // Call the client code that will react to the received command
@@ -21,17 +22,18 @@ function App() {
     });
   }, []);
   return (
-    <>
+    <div className="h-full">
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Chat />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/search" element={<Search />} />
+        {/* <Route path="/search" element={<Search />} /> */}
         <Route path="/package/:id" element={<Package />} />
         <Route path="/maps" element={<Maps/>} />
       </Routes>
-    </>
+    </div>
   );
 }
 

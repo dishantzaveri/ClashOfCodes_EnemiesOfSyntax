@@ -6,6 +6,21 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import logo from "../assets/images/logo.png";
+import { CometChat } from "@cometchat-pro/chat";
+import { COMETCHAT_CONSTANTS } from "../constants";
+
+const generateAvatar = () => {
+  // hardcode list of user's avatars for the demo purpose.
+  const avatars = [
+    "https://data-us.cometchat.io/assets/images/avatars/captainamerica.png",
+    "https://data-us.cometchat.io/assets/images/avatars/cyclops.png",
+    "https://data-us.cometchat.io/assets/images/avatars/ironman.png",
+    "https://data-us.cometchat.io/assets/images/avatars/spiderman.png",
+    "https://data-us.cometchat.io/assets/images/avatars/wolverine.png",
+  ];
+  const avatarPosition = Math.floor(Math.random() * avatars.length);
+  return avatars[avatarPosition];
+};
 
 const Register = () => {
   const navigate = useNavigate();
@@ -98,9 +113,23 @@ const Register = () => {
     };
 
     axios(config)
-      .then(function (response) {
-        let x = {...response.data, name: user.name, isVendor: role==="Vendor" ? true : false};
-        localStorage.setItem("user", JSON.stringify(x));
+      .then((response) => {
+        const userAvatar = generateAvatar();
+        const uuid = data.email.split("@")[0];
+        const user = new CometChat.User(uuid);
+        user.setName(data.name);
+        user.setAvatar(userAvatar);
+        
+        CometChat.createUser(user, COMETCHAT_CONSTANTS.AUTH_KEY).then(
+          (x) => {
+            console.log(x)
+            localStorage.setItem("token", response.data.token);
+          },
+          (error) => {
+            console.log("error", error);
+          }
+        );
+        localStorage.setItem("token", response.data.token);
         navigate("/");
       })
       .catch(function (error) {

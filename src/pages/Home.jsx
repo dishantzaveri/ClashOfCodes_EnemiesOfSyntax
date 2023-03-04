@@ -7,6 +7,7 @@ import { TbClipboardList } from "react-icons/tb";
 import { Navbar } from "../components/Navbar";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { CometChat } from "@cometchat-pro/chat";
 
 const Card = ({ data }) => {
   return (
@@ -43,6 +44,21 @@ const Home = () => {
   const [packages, setPackages] = useState([])
   const user = JSON.parse(localStorage.getItem("user"));
   useEffect(() => {
+    CometChat.getLoggedinUser().then(
+      (user) => {
+        console.log("user details:", { user });
+      },
+      (error) => {
+        console.log("error getting details:", { error });
+      }
+    );
+
+    let usersRequest = new CometChat.UsersRequestBuilder().setLimit(30).build();
+    usersRequest.fetchNext().then((userList) => {
+      console.log(userList);
+    });
+  }, []);
+  useEffect(() => {
     if(user) getPackages();
   }, []);
   const getPackages = () => {
@@ -64,13 +80,27 @@ const Home = () => {
       });
   };
   return (
-    <div className="w-full h-full relative">
-      <video autoPlay loop muted className="absolute -z-10 w-full h-auto">
+    <div className="w-full h-full relative bg-gradient-to-t from-white to-emerald-200">
+      {/* <video autoPlay loop muted className="absolute -z-10 w-full h-auto">
         <source src={backgroundVideo} type="video/mp4" />
-      </video>
+      </video> */}
       <Navbar />
-      <div className="h-[90vh]">
-        <div className="w-full h-full px-36 py-48 bg-gray-900/50">
+      <div className="flex flex-col items-center py-24 px-60 gap-6">
+        <h1 className="text-6xl text-gray-800 font-bold text-center leading-snug">
+          Explore the world with your perfect travel companion
+        </h1>
+        <h1 className="text-xl text-gray-500 font-medium text-center leading-normal">
+          Join our community of adventurous singles and start your next journey
+          together!
+        </h1>
+        <Link to="/register" className="">
+          <button className="text-gray-100 text-lg px-10 py-6 bg-emerald-500 rounded-full">
+            Get Started
+          </button>
+        </Link>
+      </div>
+      {/* <div className="h-[80vh]">
+        <div className="w-full h-full px-36 py-48 ">
           <h1 className="text-white uppercase mb-2">our packages</h1>
           <h1 className="text-white text-4xl font-bold mb-12">
             Search your{" "}
@@ -117,8 +147,8 @@ const Home = () => {
             </button>
           </div>
         </div>
-      </div>
-      <div className="w-full h-full px-36 py-24 bg-gray-50">
+      </div> */}
+      {/* <div className="w-full h-full px-36 py-24 bg-gray-50">
         <h1 className="text-gray-600 text-2xl font-bold mb-12">
           Most visited{" "}
           <span className="underline decoration-cyan-500">destinations</span>
@@ -126,7 +156,7 @@ const Home = () => {
         <div className="grid grid-cols-3 gap-8">
           {packages.length > 0 && packages.map((item) => <Card data={item} />)}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
