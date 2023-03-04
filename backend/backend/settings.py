@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'accounts',
     'pairing',
+    'location',
 ]
 
 MIDDLEWARE = [

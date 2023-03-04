@@ -12,7 +12,7 @@ class TripDetail(models.Model):
     company = models.CharField(max_length=50, blank=True)
     trip_type = models.CharField(max_length=100, blank=True)
     budget = models.IntegerField(blank=True, null=True)
-
+    cluster = models.IntegerField(blank=True, null=True)
 
 class UserDetail(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
