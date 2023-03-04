@@ -1,4 +1,4 @@
-import React,{useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, StyleSheet, NativeEventEmitter, NativeModules } from 'react-native';
 import Home from './components/Home';
 import Details from './components/Details';
@@ -11,7 +11,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Tabs from './navigation/tabs';
@@ -27,17 +27,26 @@ import BottomTabs from './screens/bottomtabs';
 import Location3 from './screens/location3';
 import Search from './screens/search';
 import Router from './Router';
-import {Provider} from 'react-redux';
+import { Provider } from 'react-redux';
 import store from './redux/store';
-import {CometChat} from '@cometchat-pro/react-native-chat';
+import { CometChat } from '@cometchat-pro/react-native-chat';
+import Blogs from './screens/Blogs';
+import OpenBlogScreen from './screens/OpenBlogScreen';
 const app_id = '231614ce9c90ad83';
 const region = 'us';
 const appSetting = new CometChat.AppSettingsBuilder()
-  .subscribePresenceForAllUsers()
-  .setRegion(region)
-  .build();
+	.subscribePresenceForAllUsers()
+	.setRegion(region)
+	.build();
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+const Drawer = createDrawerNavigator();
+const HomeStack = createNativeStackNavigator();
+const BlogStack = createNativeStackNavigator();
+const ResumeStack = createNativeStackNavigator();
+const HomeScreensStack = createNativeStackNavigator();
+const MatchScreensStack = createNativeStackNavigator();
 const { AlanManager, AlanEventEmitter } = NativeModules;
 const alanEventEmitter = new NativeEventEmitter(AlanEventEmitter);
 const subscription = alanEventEmitter.addListener('command', data => {
@@ -45,18 +54,18 @@ const subscription = alanEventEmitter.addListener('command', data => {
 });
 
 const App = () => {
-	console. disableYellowBox = true;
+	console.disableYellowBox = true;
 	useEffect(() => {
-	  CometChat.init(app_id, appSetting).then(
-		() => {
-		  console.log('Initialization completed successfully');
-		  // You can now call login function.
-		},
-		error => {
-		  console.log('Initialization failed with error:', error);
-		  // Check the reason for error and take appropriate action.
-		},
-	  );
+		CometChat.init(app_id, appSetting).then(
+			() => {
+				console.log('Initialization completed successfully');
+				// You can now call login function.
+			},
+			error => {
+				console.log('Initialization failed with error:', error);
+				// Check the reason for error and take appropriate action.
+			},
+		);
 	}, []);
 	return (
 
@@ -97,9 +106,9 @@ const App = () => {
 					options={{ headerShown: false }}></Stack.Screen>
 				{/* <Stack.Screen name="AuthStack" component={AuthStack} /> */}
 				<Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-				<Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }}/>
-				<Stack.Screen name='Dashboard' component={Tabs} options={{ headerShown: false }}/>
-				<Stack.Screen name='Place' component={Place} options={{ headerShown: false }}/>
+				<Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
+				<Stack.Screen name='Dashboard' component={Tabs} options={{ headerShown: false }} />
+				<Stack.Screen name='Place' component={Place} options={{ headerShown: false }} />
 				<Stack.Screen
 					name="Home"
 					component={Home}
@@ -109,6 +118,16 @@ const App = () => {
 					name="Details"
 					component={Details}
 					options={{ headerShown: false }}
+				/>
+				<BlogStack.Screen
+					name="Blogs"
+					component={Blogs}
+					screenOptions={{ headerShown: false }}
+				/>
+				<BlogStack.Screen
+					name="OpenBlogScreen"
+					component={OpenBlogScreen}
+					screenOptions={{ headerShown: false }}
 				/>
 
 			</Stack.Navigator>

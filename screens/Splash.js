@@ -18,7 +18,7 @@ export default function Splash({ navigation }) {
         onPress={() => {
         navigation.navigate('LoginScreen');
         console.log("Hello!");
-        }}><Text style={styles.textStyle}>Vocally</Text>
+        }}><Text style={styles.textStyle}>TravelBuddy</Text>
       </TouchableOpacity>
       </View>
     </View>

@@ -15,26 +15,14 @@ import { Cart } from '../screens/Cart';
 import { CartProvider } from "../CartContext.js";
 import { CartIcon } from "../components/CartIcon.js";
 import { NavigationContainer } from '@react-navigation/native';
+import Blogs from '../screens/Blogs';
+import OpenBlogScreen from '../screens/OpenBlogScreen';
 
 const Tab = createBottomTabNavigator();
 
 const Stack = createStackNavigator();
 
 const BlogStack = createNativeStackNavigator();
-
-const Blog = () => {
-	return (
-		<CartProvider>
-			<NavigationContainer independent={true}>
-			<BlogStack.Navigator screenOptions={{ headerShown: false }} independent={true} >
-				<BlogStack.Screen name="Products" component={ProductsList} options={({ navigation }) => ({ title: 'Products', headerRight: () => <CartIcon navigation={navigation} /> })} />
-				<BlogStack.Screen name="ProductDetails" component={ProductDetails} options={({ navigation }) => ({ title: 'Products', headerRight: () => <CartIcon navigation={navigation} /> })} />
-				<BlogStack.Screen name="Cart" component={Cart} options={({ navigation }) => ({ title: 'Products', headerRight: () => <CartIcon navigation={navigation} /> })} />
-			</BlogStack.Navigator>
-			</NavigationContainer>
-		</CartProvider>
-	);
-};
 
 
 const Tabs = () => {
@@ -115,8 +103,8 @@ const Tabs = () => {
 				}}
 			/>
 			<Tab.Screen
-				name='Packages'
-				component={Blog}
+				name='Blog'
+				component={Blogs}
 				options={{
 					tabBarIcon: ({ focused }) => (
 						<View style={{ alignItems: 'center', justifyContent: 'center' }}>

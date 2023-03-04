@@ -7,6 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Ionicons';
 import plus from '../assets/plus.png';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRef } from 'react';
 import Location from './location';
 import Location2 from './location2';
@@ -16,6 +17,14 @@ import AddProject from './AddProject';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+// const Drawer = createDrawerNavigator();
+const HomeStack = createNativeStackNavigator();
+const BlogStack = createNativeStackNavigator();
+const ResumeStack = createNativeStackNavigator();
+const HomeScreensStack = createNativeStackNavigator();
+const MatchScreensStack = createNativeStackNavigator();
+
+
 
 const BottomTabs = () => {
   const tabOffsetValue = useRef(new Animated.Value(0)).current;
