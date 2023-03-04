@@ -9,3 +9,8 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
+.leaflet-container{
+  height: 500px;
+  width: 90%;
+}

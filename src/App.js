@@ -7,6 +7,7 @@ import Search from "./pages/Search";
 import alanBtn from "@alan-ai/alan-sdk-web";
 import { useEffect } from "react";
 import Package from "./pages/Package";
+import Maps from "./pages/Maps";
 
 function App() {
   useEffect(() => {
@@ -28,6 +29,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/search" element={<Search />} />
         <Route path="/package/:id" element={<Package />} />
+        <Route path="/maps" element={<Maps/>} />
       </Routes>
     </>
   );
