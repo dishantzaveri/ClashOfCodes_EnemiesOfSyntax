@@ -8,7 +8,7 @@ import {
   CometChatGroupList,
   CometChatGroupListWithMessages,
   CometChatMessages,
-} from "../lib/cometchat-pro-react-ui-kit/CometChatWorkspace/src/components";
+} from "../lib/cometchat/CometChatWorkspace/src/components";
 
 const Chat = () => {
   return (
