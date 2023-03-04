@@ -18,6 +18,14 @@ import Tabs from './navigation/tabs';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 import AuthStack from './navigation/AuthStack';
+import Splash from './screens/Splash';
+import Location0 from './screens/location';
+import Location2 from './screens/location2';
+import Location1 from './screens/location1';
+import AddProject from './screens/AddProject';
+import BottomTabs from './screens/bottomtabs';
+import Location3 from './screens/location3';
+import Search from './screens/search';
 
 const Stack = createStackNavigator();
 const { AlanManager, AlanEventEmitter } = NativeModules;
@@ -30,11 +38,40 @@ const App = () => {
 	return (
 
 		<NavigationContainer independent={true}>
-			<Stack.Navigator
-				screenOptions={{
-					headerShown: false,
-				}}
-				initialRouteName={'LoginScreen'}>
+			<Stack.Navigator initialRouteName="Splash" independent={true}>
+				<Stack.Screen
+					name="Splash"
+					component={Splash}
+					options={{ headerShown: false }}></Stack.Screen>
+				<Stack.Screen
+					name="bottomtabs"
+					component={BottomTabs}
+					options={{ headerShown: false }}></Stack.Screen>
+				<Stack.Screen
+					name="AddProject"
+					component={AddProject}
+					options={{ headerShown: false }}></Stack.Screen>
+				<Stack.Screen
+					name="location"
+					component={Location0}
+					options={{ headerShown: false }}></Stack.Screen>
+				<Stack.Screen
+					name="location1"
+					component={Location1}
+					options={{ headerShown: false }}></Stack.Screen>
+				<Stack.Screen
+					name="location2"
+					component={Location2}
+					options={{ headerShown: false }}></Stack.Screen>
+				<Stack.Screen
+					name="location3"
+					component={Location3}
+					options={{ headerShown: false }}></Stack.Screen>
+
+				<Stack.Screen
+					name="search"
+					component={Search}
+					options={{ headerShown: false }}></Stack.Screen>
 				<Stack.Screen name="AuthStack" component={AuthStack} />
 				<Stack.Screen name="LoginScreen" component={LoginScreen} />
 				<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
