@@ -9,8 +9,14 @@ import Package from "./pages/Package";
 import Maps from "./pages/Maps";
 import { ALAN_API } from "./constants";
 import Chat from "./pages/Chat";
+import Aos from "aos";
+import "aos/dist/aos.css";
 
 function App() {
+  useEffect(() => {
+    Aos.init({ duration: 500, once: false });
+  }, []);
+
   useEffect(() => {
     alanBtn({
       key: ALAN_API,
