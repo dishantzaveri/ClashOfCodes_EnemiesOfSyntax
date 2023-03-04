@@ -9,7 +9,7 @@ import plus from '../assets/plus.png';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useRef } from 'react';
-import Location from './location';
+import Location0 from './location0';
 import Location2 from './location2';
 import Location1 from './location1';
 import Location3 from './location3';
@@ -58,7 +58,7 @@ const BottomTabs = () => {
 
         }}
       >
-        <Tab.Screen name="location" component={Location} options={{
+        <Tab.Screen name="location0" component={Location0} options={{
 
           headerShown: false,
           tabBarLabel: 'Default',

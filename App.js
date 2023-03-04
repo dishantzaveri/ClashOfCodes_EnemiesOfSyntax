@@ -19,11 +19,11 @@ import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
 // import AuthStack from './navigation/AuthStack';
 import Splash from './screens/Splash';
-import Location0 from './screens/location';
+import Location0 from './screens/location0';
 import Location2 from './screens/location2';
 import Location1 from './screens/location1';
 import AddProject from './screens/AddProject';
-import BottomTabs from './screens/bottomtabs';
+// import BottomTabs from './screens/bottomtabs';
 import Location3 from './screens/location3';
 import Search from './screens/search';
 import Router from './Router';
@@ -37,6 +37,8 @@ import Profile1 from './components/Profile1';
 import Profile2 from './components/Profile2';
 import Profile3 from './components/Profile3';
 import Face from './screens/face';
+import AppStack from './navigation/AppStack';
+import Parent from './screens/Parent';
 const app_id = '231614ce9c90ad83';
 const region = 'us';
 const appSetting = new CometChat.AppSettingsBuilder()
@@ -80,19 +82,19 @@ const App = () => {
 					name="Splash"
 					component={Splash}
 					options={{ headerShown: false }}></Stack.Screen>
-				<Stack.Screen
+				{/* <Stack.Screen
 					name="bottomtabs"
 					component={BottomTabs}
-					options={{ headerShown: false }}></Stack.Screen>
+					options={{ headerShown: false }}></Stack.Screen> */}
 				<Stack.Screen
 					name="AddProject"
 					component={AddProject}
 					options={{ headerShown: false }}></Stack.Screen>
-				<Stack.Screen
-					name="location"
+				{/* <Stack.Screen
+					name="location0"
 					component={Location0}
-					options={{ headerShown: false }}></Stack.Screen>
-				<Stack.Screen
+					options={{ headerShown: false }}></Stack.Screen> */}
+				{/* <Stack.Screen
 					name="location1"
 					component={Location1}
 					options={{ headerShown: false }}></Stack.Screen>
@@ -103,7 +105,7 @@ const App = () => {
 				<Stack.Screen
 					name="location3"
 					component={Location3}
-					options={{ headerShown: false }}></Stack.Screen>
+					options={{ headerShown: false }}></Stack.Screen> */}
 
 				<Stack.Screen
 					name="search"
@@ -114,6 +116,11 @@ const App = () => {
 				<Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
 				<Stack.Screen name='Dashboard' component={Tabs} options={{ headerShown: false }} />
 				<Stack.Screen name='Place' component={Place} options={{ headerShown: false }} />
+				<Stack.Screen
+					name="Parent"
+					component={Parent}
+					options={{ headerShown: false }}
+				/>
 				<Stack.Screen
 					name="Home"
 					component={Home}
@@ -129,12 +136,12 @@ const App = () => {
 					component={Profile}
 					options={{ headerShown: false }}
 				/>
-					<Stack.Screen
+				<Stack.Screen
 					name="Profile1"
 					component={Profile1}
 					options={{ headerShown: false }}
 				/>
-					<Stack.Screen
+				<Stack.Screen
 					name="Profile2"
 					component={Profile2}
 					options={{ headerShown: false }}
@@ -169,7 +176,6 @@ const App = () => {
 		</NavigationContainer>
 	);
 };
-
 const styles = StyleSheet.create({
 	tabBar: {
 		backgroundColor: colors.white,

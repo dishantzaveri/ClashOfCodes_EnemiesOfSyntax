@@ -64,7 +64,7 @@ const LoginScreen = ({navigation}) => {
           fieldButtonFunction={() => {}}
         />
         
-        <CustomButton label={"Login"} onPress={() =>  navigation.navigate('face')} />
+        <CustomButton label={"Login"} onPress={() =>  navigation.navigate('Dashboard')} />
 
 
         <View
