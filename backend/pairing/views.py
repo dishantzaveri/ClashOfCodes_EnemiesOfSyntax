@@ -60,3 +60,16 @@ class TripDetailClusterAPI(ListAPIView):
         cluster1 = cluster(id)
         print(cluster1)
         return TripDetail.objects.filter(cluster = cluster1).exclude(id=id)
+
+
+class UserDetailClusterAPI(GenericAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = UserDetailClusterSerializer
+
+    def post(self, request):
+        email = request.data['email']
+        user = User.objects.get(email=email)
+        user_det = UserDetail.objects.get(user = user)
+        serializer = self.serializer_class(user_det)
+        data = serializer.data
+        return JsonResponse({"message": "success", "data": data}, status=status.HTTP_200_OK)
