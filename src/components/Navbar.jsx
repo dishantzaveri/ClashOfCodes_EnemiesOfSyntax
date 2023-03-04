@@ -67,9 +67,7 @@ export const Navbar = ({ color }) => {
       <div className="flex gap-12 items-center">
         <Link to="/" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
-              location.pathname === "/" ? "900" : "700"
-            }`}
+            className={`font-semibold`}
           >
             {t("home")}
           </h1>
@@ -79,9 +77,7 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/profile" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
-              location.pathname === "/profile" ? "900" : "700"
-            }`}
+            className={`font-semibold`}
           >
             {t("profile")}
           </h1>
@@ -91,9 +87,7 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/home" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
-              location.pathname === "/home" ? "900" : "700"
-            }`}
+            className={`font-semibold`}
           >
             {t("chat")}
           </h1>
@@ -103,9 +97,7 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/itinerary" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${
-              location.pathname === "/itinerary" ? "900" : "700"
-            }`}
+            className={`font-semibold`}
           >
             {t("Itinerary")}
           </h1>
