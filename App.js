@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { View, Text, StyleSheet, NativeEventEmitter, NativeModules } from 'react-native';
 import Home from './components/Home';
 import Details from './components/Details';
@@ -17,7 +17,7 @@ import Entypo from 'react-native-vector-icons/Entypo';
 import Tabs from './navigation/tabs';
 import RegisterScreen from './screens/RegisterScreen';
 import LoginScreen from './screens/LoginScreen';
-import AuthStack from './navigation/AuthStack';
+// import AuthStack from './navigation/AuthStack';
 import Splash from './screens/Splash';
 import Location0 from './screens/location';
 import Location2 from './screens/location2';
@@ -26,6 +26,16 @@ import AddProject from './screens/AddProject';
 import BottomTabs from './screens/bottomtabs';
 import Location3 from './screens/location3';
 import Search from './screens/search';
+import Router from './Router';
+import {Provider} from 'react-redux';
+import store from './redux/store';
+import {CometChat} from '@cometchat-pro/react-native-chat';
+const app_id = '231614ce9c90ad83';
+const region = 'us';
+const appSetting = new CometChat.AppSettingsBuilder()
+  .subscribePresenceForAllUsers()
+  .setRegion(region)
+  .build();
 
 const Stack = createStackNavigator();
 const { AlanManager, AlanEventEmitter } = NativeModules;
@@ -35,6 +45,19 @@ const subscription = alanEventEmitter.addListener('command', data => {
 });
 
 const App = () => {
+	console. disableYellowBox = true;
+	useEffect(() => {
+	  CometChat.init(app_id, appSetting).then(
+		() => {
+		  console.log('Initialization completed successfully');
+		  // You can now call login function.
+		},
+		error => {
+		  console.log('Initialization failed with error:', error);
+		  // Check the reason for error and take appropriate action.
+		},
+	  );
+	}, []);
 	return (
 
 		<NavigationContainer independent={true}>
@@ -72,11 +95,11 @@ const App = () => {
 					name="search"
 					component={Search}
 					options={{ headerShown: false }}></Stack.Screen>
-				<Stack.Screen name="AuthStack" component={AuthStack} />
-				<Stack.Screen name="LoginScreen" component={LoginScreen} />
-				<Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-				<Stack.Screen name='Dashboard' component={Tabs} />
-				<Stack.Screen name='Place' component={Place} />
+				{/* <Stack.Screen name="AuthStack" component={AuthStack} /> */}
+				<Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+				<Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }}/>
+				<Stack.Screen name='Dashboard' component={Tabs} options={{ headerShown: false }}/>
+				<Stack.Screen name='Place' component={Place} options={{ headerShown: false }}/>
 				<Stack.Screen
 					name="Home"
 					component={Home}

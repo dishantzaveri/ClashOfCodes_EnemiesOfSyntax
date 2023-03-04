@@ -16,7 +16,7 @@ export default function Splash({ navigation }) {
         <TouchableOpacity
         style={styles.button}
         onPress={() => {
-        navigation.navigate('bottomtabs');
+        navigation.navigate('LoginScreen');
         console.log("Hello!");
         }}><Text style={styles.textStyle}>Vocally</Text>
       </TouchableOpacity>
