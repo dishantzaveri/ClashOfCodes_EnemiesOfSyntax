@@ -46,10 +46,14 @@ class UserDetailAPI(GenericAPIView):
             return JsonResponse({"message":"data not valid"}, status=status.HTTP_400_BAD_REQUEST)
 
     def get(self, request):
-        obj = UserDetail.objects.get(user = request.user)
-        serializer = self.serializer_class(obj)
-        data = serializer.data
-        return JsonResponse({"message": "success", "data": data}, status=status.HTTP_200_OK)
+        try:
+            obj = UserDetail.objects.get(user = request.user)
+            serializer = self.serializer_class(obj)
+            data = serializer.data
+            return JsonResponse({"message": "success", "data": data}, status=status.HTTP_200_OK)
+        except: 
+            return JsonResponse({"message":"user details not filled"}, status=status.HTTP_404_NOT_FOUND)
+
 
 class TripDetailClusterAPI(ListAPIView):
     permission_classes = [permissions.AllowAny]
