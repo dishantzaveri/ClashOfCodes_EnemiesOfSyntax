@@ -46,15 +46,30 @@ export const Navbar = ({ color }) => {
     <div className="w-full flex px-24 py-4 justify-between items-center">
       <div className="flex items-center gap-2">
         <img className="w-8" src={logo} alt="" />
-        <h1 className={`text-2xl font-bold underline decoration-${color}-500`}>
+        <h1
+          className={`text-2xl font-bold underline ${
+            color == "emerald"
+              ? "decoration-emerald-500"
+              : color == "amber"
+              ? "decoration-amber-500"
+              : color == "sky"
+              ? "decoration-sky-500"
+              : color == "red"
+              ? "decoration-red-500"
+              : color == "violet"
+              ? "decoration-violet-500"
+              : "decoration-purple-500"
+          }`}
+        >
           {t("tripright")}
         </h1>
       </div>
       <div className="flex gap-12 items-center">
         <Link to="/" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${location.pathname === "/" ? "900" : "700"
-              }`}
+            className={`font-semibold text-gray-${
+              location.pathname === "/" ? "900" : "700"
+            }`}
           >
             {t("home")}
           </h1>
@@ -64,8 +79,9 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/profile" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${location.pathname === "/profile" ? "900" : "700"
-              }`}
+            className={`font-semibold text-gray-${
+              location.pathname === "/profile" ? "900" : "700"
+            }`}
           >
             {t("profile")}
           </h1>
@@ -75,8 +91,9 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/home" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${location.pathname === "/home" ? "900" : "700"
-              }`}
+            className={`font-semibold text-gray-${
+              location.pathname === "/home" ? "900" : "700"
+            }`}
           >
             {t("chat")}
           </h1>
@@ -86,8 +103,9 @@ export const Navbar = ({ color }) => {
         </Link>
         <Link to="/itinerary" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-gray-${location.pathname === "/itinerary" ? "900" : "700"
-              }`}
+            className={`font-semibold text-gray-${
+              location.pathname === "/itinerary" ? "900" : "700"
+            }`}
           >
             {t("Itinerary")}
           </h1>
@@ -106,8 +124,10 @@ export const Navbar = ({ color }) => {
           </button>
           <Menu as="div" className="relative inline-block text-left">
             <div>
-              <Menu.Button className={`text-gray-100 px-8 py-4 bg-${color}-500 rounded-full`}>
-                lang <MdOutlineLanguage className="inline"/>
+              <Menu.Button
+                className={`text-gray-100 px-8 py-4 bg-${color}-500 rounded-full`}
+              >
+                lang <MdOutlineLanguage className="inline" />
               </Menu.Button>
             </div>
 
@@ -123,19 +143,24 @@ export const Navbar = ({ color }) => {
               <Menu.Items className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="py-1">
                   {numbers.map((i) => {
-                    return <Menu.Item>
-                      {({ active }) => (
-                        <button
-                          onClick={handlechange} value={i.val}
-                          className={classNames(
-                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                            'block px-4 py-2 text-lg'
-                          )}
-                        >
-                          {i.text}
-                        </button>
-                      )}
-                    </Menu.Item>
+                    return (
+                      <Menu.Item>
+                        {({ active }) => (
+                          <button
+                            onClick={handlechange}
+                            value={i.val}
+                            className={classNames(
+                              active
+                                ? "bg-gray-100 text-gray-900"
+                                : "text-gray-700",
+                              "block px-4 py-2 text-lg"
+                            )}
+                          >
+                            {i.text}
+                          </button>
+                        )}
+                      </Menu.Item>
+                    );
                   })}
                 </div>
               </Menu.Items>
@@ -145,10 +170,12 @@ export const Navbar = ({ color }) => {
       ) : (
         <div className="flex gap-12 items-center">
           <Link to="login">
-            <button className="font-semibold text-gray-800">Login</button>
+            <button className="font-semibold">Login</button>
           </Link>
           <Link to="register">
-            <button className="text-gray-100 px-8 py-4 bg-emerald-500 rounded-full">
+            <button
+              className={`text-gray-100 px-8 py-4 bg-${color}-500 rounded-full`}
+            >
               {t("Register")}
             </button>
           </Link>
