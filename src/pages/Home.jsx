@@ -26,6 +26,7 @@ import { Dialog, Transition } from "@headlessui/react";
 import L from "leaflet";
 import mark from "../assets/images/markers.png";
 import { useTranslation } from "react-i18next";
+import Footer from "./FooterHome";
 
 const Card = ({ data, theme }) => {
   const { t } = useTranslation();
@@ -534,6 +535,7 @@ const Home = () => {
 
         </div>
       </div>
+      <Footer/>
     </div>
   );
 };

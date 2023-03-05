@@ -131,7 +131,7 @@ export const Navbar = () => {
           >
             {t("Forum")}
           </h1>
-          {location.pathname === "/events" && (
+          {location.pathname === "/forum" && (
             <div className="bg-emerald-500 w-4 h-1 rounded"></div>
           )}
         </Link>

@@ -1,0 +1,174 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Righteous&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@800&family=Readex+Pro:wght@200;400;600&family=Righteous&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo:wght@200&family=Libre+Baskerville&family=Mochiy+Pop+P+One&display=swap");
+
+/* loc footer */
+.locNav p {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-family: Montserrat;
+  font-size: 1.3rem;
+  padding: 13% 5% 8% 0%;
+}
+
+.locationData {
+  font-size: 1rem;
+  font-family: Montserrat;
+  padding: 0% 6%;
+  font-weight: 400;
+}
+.aboutFooter {
+  font-size: 0.8rem;
+  font-family: Montserrat;
+  padding: 0% 6%;
+  font-weight: 400;
+}
+.locationMail {
+  font-weight: 600;
+  font-size: 1rem;
+  font-family: Montserrat;
+  padding: 3%;
+}
+
+.locNav a {
+  text-decoration: none;
+  /* color: white; */
+  font-size: 1.7rem;
+  padding: 2%;
+}
+
+.locLinkFooter {
+  font-size: 0.9rem;
+  padding: 0;
+}
+
+@media (max-width: 500px) {
+  .contactHeading {
+    margin-left: -88px !important;
+  }
+}
+
+.countdownMediaQ {
+  padding: 20px 10px 20px 30px !important;
+}
+
+@media (max-width: 500px) {
+  .countdownMediaQ {
+    padding: 20px 10px 20px 10px !important;
+  }
+}
+
+.mobileview {
+  margin-bottom: 0px !important;
+}
+
+@media (max-width: 600px) {
+  .mobileview {
+    margin-bottom: 80px !important;
+  }
+}
+
+/* publicity */
+
+.pubNumber {
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(315deg, #f2cf07 0%, #55d284 74%);
+  font-family: "Mochiy Pop P One", sans-serif;
+  font-size: 2rem;
+}
+
+.pubData {
+  font-family: "Libre Baskerville", serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  position: relative;
+  top: -5px;
+}
+
+.pubdummy {
+  font-size: 0.7rem;
+  /* color: rgb(37, 34, 34); */
+  font-family: "Archivo", sans-serif;
+  font-weight: 600;
+}
+.fullPub {
+  text-align: left;
+  padding: 3%;
+  border-left: 2px #f2cf07 solid;
+}
+
+/* hero */
+.heroHead {
+  font-family: "Mochiy Pop P One", sans-serif;
+  font-size: 2.5rem;
+  padding: 20px 20%;
+}
+
+.heroFeature,
+.heroFeature2 {
+  padding: 0% 1%;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.heroFeature {
+  border-right: 2px solid black;
+}
+
+.LinkTag {
+  text-decoration: none;
+}
+
+.heroImage {
+  width: 350px;
+  height: 300px;
+}
+
+/* main page */
+.home {
+  font-family: "Libre Baskerville", serif;
+}
+
+/* quality */
+.cat_link {
+  text-decoration: none;
+}
+
+.about_quality {
+  margin: 150px 0%;
+  padding: 4%;
+  background-color: #116530;
+}
+.about_quality p {
+  font-size: 3.5rem;
+  color: #ffec1d;
+}
+.about_quality h3 {
+  font-size: 1.4rem;
+  font-family: "Source Serif 4", sans-serif;
+  color: #ffec1d;
+  padding-bottom: 10px;
+}
+.about_quality span {
+  font-size: 0.8rem;
+  color: #ffec1d;
+}
+.cat_link p {
+  /* color: #116530; */
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.MuiButtonBase-root-MuiFab-root-MuiSpeedDial-fab {
+  background-color: red !important;
+}
+
+.heroHeadMain{
+  font-size: 4rem;
+  font-family: "Libre Baskerville", serif;
+  text-shadow: 0 0 8px rgb(255,255,255);
+  position: relative;
+  top: 200px;
+}

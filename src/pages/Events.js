@@ -290,6 +290,7 @@ const Events = () => {
                 </div>
 
                 {/* <MyCalendar /> */}
+                <h1 className='p-8 text-2xl  self-center'>Schedule</h1>
                 <Demo />
             </div>
         </>

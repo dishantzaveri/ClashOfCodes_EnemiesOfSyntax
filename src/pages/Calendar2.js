@@ -95,7 +95,7 @@ const AppointmentComponent = (props) => {
                 {...props}
                 style={{
                     ...props.style,
-                    backgroundColor: "#ef4444",
+                    backgroundColor: "#065f46",
                 }}
             />
         );
@@ -106,8 +106,8 @@ const AppointmentComponent = (props) => {
             style={{
                 ...props.style,
                 cursor: "not-allowed",
-                color: "#6b21a8",
-                backgroundColor: "#fecaca",
+                color: "black",
+                backgroundColor: "#6ee7b7",
             }}
         />
     );
