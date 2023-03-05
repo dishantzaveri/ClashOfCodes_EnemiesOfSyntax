@@ -18,6 +18,7 @@ import Companion from "./pages/Companion";
 import Chating from "./pages/Forum/components/Chat";
 import NavbarFire from "./pages/Forum/components/Navbar";
 import Forum from "./pages/Forum/components/Forum";
+import Vendors from "./pages/Vendors";
 
 function App() {
   useEffect(() => {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/maps" element={<Maps />} />
         <Route path="/forum" element={<Forum />}></Route>
+        <Route path="/vendors" element={<Vendors />}></Route>
       </Routes>
     </div>
   );

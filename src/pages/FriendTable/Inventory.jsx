@@ -18,6 +18,111 @@ import { TablePending } from "./TableOther";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
+const data = {
+  partners: [
+    {
+      name: "Emily",
+      age: 25,
+      gender: "Female",
+      interests: ["Hiking", "Photography"],
+      preferred_destination: "National Parks",
+      travel_style: "Budget",
+      location: "United States",
+      status: "Accepted",
+    },
+    {
+      name: "Jack",
+      age: 32,
+      gender: "Male",
+      interests: ["Food", "Music"],
+      preferred_destination: "Europe",
+      travel_style: "Luxury",
+      location: "United Kingdom",
+      status: "Rejected",
+    },
+    {
+      name: "Sarah",
+      age: 28,
+      gender: "Female",
+      interests: ["Beach", "Yoga"],
+      preferred_destination: "Southeast Asia",
+      travel_style: "Solo",
+      location: "Thailand",
+      status: "Pending",
+    },
+    {
+      name: "Alex",
+      age: 30,
+      gender: "Male",
+      interests: ["History", "Museums"],
+      preferred_destination: "South America",
+      travel_style: "Backpacking",
+      location: "Peru",
+      status: "Accepted",
+    },
+    {
+      name: "Rachel",
+      age: 26,
+      gender: "Female",
+      interests: ["Skiing", "Snowboarding"],
+      preferred_destination: "Canada",
+      travel_style: "Adventure",
+      location: "Canada",
+      status: "Rejected",
+    },
+    {
+      name: "Tom",
+      age: 29,
+      gender: "Male",
+      interests: ["Wildlife", "Camping"],
+      preferred_destination: "Africa",
+      travel_style: "Cultural",
+      location: "South Africa",
+      status: "Pending",
+    },
+    {
+      name: "Lily",
+      age: 27,
+      gender: "Female",
+      interests: ["Scuba Diving", "Snorkeling"],
+      preferred_destination: "Australia",
+      travel_style: "Sustainable",
+      location: "Australia",
+      status: "Accepted",
+    },
+    {
+      name: "Mike",
+      age: 33,
+      gender: "Male",
+      interests: ["Road Trips", "Surfing"],
+      preferred_destination: "California",
+      travel_style: "Active",
+      location: "United States",
+      status: "Pending",
+    },
+    {
+      name: "Ava",
+      age: 24,
+      gender: "Female",
+      interests: ["Art", "Architecture"],
+      preferred_destination: "Japan",
+      travel_style: "Relaxing",
+      location: "Japan",
+      status: "Accepted",
+    },
+    {
+      name: "Sam",
+      age: 31,
+      gender: "Male",
+      interests: ["Wine Tasting", "City Exploration"],
+      preferred_destination: "Italy",
+      travel_style: "Romantic",
+      location: "Italy",
+      status: "Rejected",
+    },
+  ],
+};
+
 const TabLabel = ({ name, number, checked }) => {
   return (
     <Box
@@ -62,7 +167,7 @@ const buttonClick = () => {
   });
 };
 
-const array = ["Shipped", "Ordered", "Required"];
+const array = ["Accepted", "Rejected", "Pending"];
 
 const typeA = ["Chemical", "Other", "Equipment"];
 
@@ -125,17 +230,17 @@ const Inventory = () => {
   const [filteredData, setFilteredData] = useState([]);
   const [tabs, setTabs] = useState({
     All: 0,
-    Shipped: 0,
-    Ordered: 0,
-    Required: 0,
+    Accepted: 0,
+    Rejected: 0,
+    Pending: 0,
   });
   useEffect(() => {
     if (rows) {
       let x = {
         All: 0,
-        Shipped: 0,
-        Ordered: 0,
-        Required: 0,
+        Accepted: 0,
+        Rejected: 0,
+        Pending: 0,
       };
       let array = [];
       rows.map((row) => {
@@ -161,31 +266,22 @@ const Inventory = () => {
   }, [search]);
 
   useEffect(() => {
-    axios
-      .get("https://dummyjson.com/products")
-      .then((res) => {
-        console.log(res.data.products);
-        const data = res.data.products;
-        let array = [];
-        let x = {
-          All: 0,
-          Shipped: 0,
-          Ordered: 0,
-          Required: 0,
-        };
-        data.forEach((item) => {
-          let data = createData(item.id, item.title, item.stock, item.price);
-          array.push(data);
-          x[data.status]++;
-          x["All"]++;
-        });
-        setTabs(x);
-        setRows(array);
-        setFilteredData(array);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    let array = [];
+    let x = {
+      All: 0,
+      Accepted: 0,
+      Rejected: 0,
+      Pending: 0,
+    };
+    data.partners.forEach((item) => {
+      let data = createData(item.age, item.name, item.gender, item.location, item.status);
+      array.push(data);
+      x[data.status]++;
+      x["All"]++;
+    });
+    setTabs(x);
+    setRows(array);
+    setFilteredData(array);
   }, []);
 
   const { id } = useParams();
@@ -203,7 +299,7 @@ const Inventory = () => {
           }}
         >
           <Typography variant={theme.breakpoints.up("md") ? "h3" : "h5"}>
-            Inventory
+            My Connections
           </Typography>
           {names && (
             <Autocomplete

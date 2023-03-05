@@ -93,66 +93,23 @@ function Row(props) {
   return (
     <React.Fragment>
       <StyledTableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-        <StyledTableCell>
-          <IconButton
-            aria-label="expand row"
-            size="small"
-            onClick={() => setOpen(!open)}
-          >
-            {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-          </IconButton>
-        </StyledTableCell>
         <StyledTableCell component="th" scope="row">
           {row.name}
         </StyledTableCell>
+        <StyledTableCell align="right">{row.id}</StyledTableCell>
         <StyledTableCell align="right">{row.quantity}</StyledTableCell>
-        <StyledTableCell align="right">{row.type}</StyledTableCell>
         <StyledTableCell align="right">{row.price}</StyledTableCell>
         <StyledTableCell align="right">
 
-          {row.status === "Shipped" ?
+          {row.status === "Accepted" ?
             <Button color='success'>{row.status}</Button>
             :
-            row.status === "Ordered" ?
+            row.status === "Pending" ?
               <Button color='warning'>{row.status}</Button>
               :
               <Button color='error'>{row.status}</Button>
           }
         </StyledTableCell>
-        <StyledTableCell align="right"><Button size='small' color='error' variant='contained' onClick={(e) => {
-          // var axios = require('axios');
-
-          // var config = {
-          //   method: 'delete',
-          //   url: `https://dummyjson.com/products/${row.id}`,
-          //   headers: {}
-          // };
-
-          // axios(config)
-          //   .then(function (response) {
-          //     console.log(JSON.stringify(response.data));
-
-          //     Swal.fire({
-          //       position: 'top-end',
-          //       icon: 'success',
-          //       title: 'Data is deleted',
-          //       showConfirmButton: false,
-          //       timer: 1500
-          //     })
-          //   })
-          //   .catch(function (error) {
-          //     console.log(error);
-          //   });
-          let array = rows.filter(item => item.id !== row.id)
-          setRows(array)
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Data is deleted',
-            showConfirmButton: false,
-            timer: 1500
-          })
-        }}><DeleteForeverIcon /></Button></StyledTableCell>
       </StyledTableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -251,72 +208,15 @@ export const EnhancedTable = ({ type,checked, rows, setRows }) => {
       <Table stickyHeader aria-label="collapsible table">
         <TableHead >
           <TableRow >
-            <StyledTableCell><Button color='success' size='large' onClick={handleClickOpen} variant='contained'>ADD</Button></StyledTableCell>
-            <StyledTableCell align='center' >Item</StyledTableCell>
-            <StyledTableCell align="right" >Quantity</StyledTableCell>
-            <StyledTableCell align="right">Type</StyledTableCell>
-            <StyledTableCell align="right">Price($)</StyledTableCell>
+            <StyledTableCell>Name</StyledTableCell>
+            <StyledTableCell align='center' >Age</StyledTableCell>
+            <StyledTableCell align="right" >Sex</StyledTableCell>
+            <StyledTableCell align="right">Location</StyledTableCell>
             <StyledTableCell align="right">Status</StyledTableCell>
             <StyledTableCell align="right"></StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          <Dialog open={open} onClose={handleClose}>
-            <DialogTitle>Inventory</DialogTitle>
-            <DialogContent>
-              <DialogContentText>
-                Add the Details :
-              </DialogContentText>
-              <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                name='name'
-                label="Item name"
-                type="text"
-                color='success'
-                fullWidth
-                onChange={handleChanges}
-                variant="standard"
-                value={items.name}
-              />
-              <TextField
-                margin="dense"
-                id="price"
-                color='success'
-                name='price'
-                onChange={handleChanges}
-                value={items.price}
-                label="Price"
-                type="text"
-                variant="standard"
-              />
-              &nbsp;
-              &nbsp;
-              <TextField
-                margin="dense"
-                color='success'
-                onChange={handleChanges}
-                id="quantity"
-                name='quantity'
-                value={items.quantity}
-                label="Quantity"
-                type="text"
-                variant="standard"
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button color='error' onClick={handleClose}>Cancel</Button>
-              <Button color='success' onClick={() => {
-
-                setRows(prevState => [...prevState, createData(0, items.name, items.price, items.quantity)]);
-                setOpen(false);
-                Swal.fire(
-                  "Added Successfully at the end"
-                )
-              }}>Submit</Button>
-            </DialogActions>
-          </Dialog>
           {/* {d.map((e) => {
             var h = createData(e.title, e.stock, e.price)
             return <TableRow>

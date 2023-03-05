@@ -306,19 +306,33 @@ const Profile = () => {
             >
               <h1 className="text-2xl font-semibold">{trip.user}</h1>
               <h1 className="text-gray-400 text-sm mt-2">
-                {trip.start_date} - {trip.end_date}
+                From: {trip.start_date}
               </h1>
-              <h1 className="text-gray-400 text-sm mt-2">{trip.destination}</h1>
-              <h1 className="text-gray-400 text-sm mt-2">{trip.budget}</h1>
-              <h1 className="text-gray-400 text-sm mt-2">{trip.company}</h1>
-              <h1 className="text-gray-400 text-sm mt-2">{trip.transport}</h1>
-              <h1 className="text-gray-400 text-sm mt-2">{trip.trip_type}</h1>
+              <h1 className="text-gray-400 text-sm mt-2">
+                To: {trip.end_date}
+              </h1>
+              <h1 className="text-gray-400 text-sm mt-2">
+                Destination: {trip.destination}
+              </h1>
+              <h1 className="text-gray-400 text-sm mt-2">
+                Budget: {trip.budget}
+              </h1>
+              <h1 className="text-gray-400 text-sm mt-2">
+                Company: {trip.company}
+              </h1>
+              <h1 className="text-gray-400 text-sm mt-2">
+                Transport: {trip.transport}
+              </h1>
+              <h1 className="text-gray-400 text-sm mt-2">
+                Trip types: {trip.trip_type}
+              </h1>
             </Link>
           ))}
         </div>
       ) : (
         <h1>Loading...</h1>
       )}
+      <Inventory />
       <Modal
         isOpen={fill}
         onRequestClose={() => setFill(false)}
@@ -1057,7 +1071,7 @@ const Profile = () => {
           </div>
         </div>
       </Modal> */}
-      <Inventory />
+
       {/* <Friends /> */}
     </div>
   );

@@ -135,6 +135,18 @@ export const Navbar = () => {
             <div className="bg-emerald-500 w-4 h-1 rounded"></div>
           )}
         </Link>
+        <Link to="/vendors" className="flex flex-col items-center">
+          <h1
+            className={`font-semibold text-lg text-gray-${
+              location.pathname === "/forum" ? "900" : "700"
+            }`}
+          >
+            {t('Vendors')}
+          </h1>
+          {location.pathname === "/vendors" && (
+            <div className="bg-emerald-500 w-4 h-1 rounded"></div>
+          )}
+        </Link>
       </div>
       {user ? (
         <div className="flex gap-4 items-center">
