@@ -198,7 +198,11 @@ const Home = () => {
   const { t } = useTranslation();
 
   const [theme, setTheme] = useState("emerald");
-  localStorage.setItem("color", theme);
+  useEffect(() => {
+    localStorage.setItem("color", theme);
+  }, [theme])
+  
+  localStorage.setItem("color",theme);
   useEffect(() => {
     CometChat.getLoggedinUser().then(
       (user) => {
