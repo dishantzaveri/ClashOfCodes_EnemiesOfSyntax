@@ -9,6 +9,7 @@ import event from "../assets/videos/events.mp4";
 import { HiOutlineLocationMarker } from "react-icons/hi";
 import { Navbar } from "../components/Navbar";
 import { Link } from "react-router-dom";
+import { beaches, temples } from "./PreferenceData"
 import {
   MapContainer,
   Marker,
@@ -51,7 +52,7 @@ const Card = ({ data, theme }) => {
     >
       <img
         className="rounded-t-xl h-[35vh] w-full"
-        src={data.venue.image_url}
+        src={data.image_url}
         alt=""
       />
       <div className="px-4 py-6">
@@ -59,49 +60,47 @@ const Card = ({ data, theme }) => {
           {t(data.name)}
         </h1>
         <h1 className="text-gray-400 text-sm mb-4 flex items-center gap-2">
-          <HiOutlineLocationMarker className="text-lg" /> {data.venue.location}
+          <HiOutlineLocationMarker className="text-lg" /> {t(data.location)}
         </h1>
-        <div className="border-t border-b p-3 flex justify-between items-center">
+        {/* <div className="border-t border-b p-3 flex justify-between items-center">
           <h1 className="text-gray-400"> Date :</h1>
           <h1 className="text-gray-600 text-2xl font-bold">{data.date}</h1>
-        </div>
+        </div> */}
         <h1 className="text-sm text-gray-600 py-4">
-          Rate : {data.trending_score}/10
+          Rate : {parseInt(Math.abs(data.latitude % 10))}/10
         </h1>
         <div className="flex justify-between">
           <button
             onClick={() => setOpenMap(true)}
-            className={`flex items-center gap-2 text-white font-semibold uppercase rounded-full px-6 py-2 ${
-              theme == "emerald"
-                ? "bg-emerald-500"
-                : theme == "amber"
+            className={`flex items-center gap-2 text-white font-semibold uppercase rounded-full px-6 py-2 ${theme == "emerald"
+              ? "bg-emerald-500"
+              : theme == "amber"
                 ? "bg-amber-500"
                 : theme == "sky"
-                ? "bg-sky-500"
-                : theme == "red"
-                ? "bg-red-500"
-                : theme == "violet"
-                ? "bg-violet-500"
-                : "bg-purple-500"
-            }`}
+                  ? "bg-sky-500"
+                  : theme == "red"
+                    ? "bg-red-500"
+                    : theme == "violet"
+                      ? "bg-violet-500"
+                      : "bg-purple-500"
+              }`}
           >
             Location <BiMap />
           </button>
           <button
             onClick={() => setOpenMap(true)}
-            className={`flex items-center gap-2 text-white font-semibold uppercase rounded-full px-6 py-2 ${
-              theme == "emerald"
-                ? "bg-emerald-500"
-                : theme == "amber"
+            className={`flex items-center gap-2 text-white font-semibold uppercase rounded-full px-6 py-2 ${theme == "emerald"
+              ? "bg-emerald-500"
+              : theme == "amber"
                 ? "bg-amber-500"
                 : theme == "sky"
-                ? "bg-sky-500"
-                : theme == "red"
-                ? "bg-red-500"
-                : theme == "violet"
-                ? "bg-violet-500"
-                : "bg-purple-500"
-            }`}
+                  ? "bg-sky-500"
+                  : theme == "red"
+                    ? "bg-red-500"
+                    : theme == "violet"
+                      ? "bg-violet-500"
+                      : "bg-purple-500"
+              }`}
           >
             <BiMapPin /> View
           </button>
@@ -132,7 +131,7 @@ const Card = ({ data, theme }) => {
                   <MapContainer center={center} zoom="12">
                     <TileLayer url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=3DHOohQB1Ufdr3SDSGbf"></TileLayer>
                     <Marker
-                      position={[data.venue.latitude, data.venue.longitude]}
+                      position={[data.latitude, data.longitude]}
                       icon={markerIcon}
                       key={data.name}
                     ></Marker>
@@ -167,13 +166,14 @@ const Background = ({ backgroundVideo, theme }) => {
 const Home = () => {
   const [destination, setDestination] = useState("");
   const [filteredList, setFilteredList] = useState([]);
+  const [filteredList2, setFilteredList2] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [packages, setPackages] = useState([])
   const user = JSON.parse(localStorage.getItem("user"));
   const { t } = useTranslation();
 
   const [theme, setTheme] = useState("emerald");
-  localStorage.setItem("color",theme);
+  localStorage.setItem("color", theme);
   useEffect(() => {
     CometChat.getLoggedinUser().then(
       (user) => {
@@ -190,10 +190,17 @@ const Home = () => {
     });
   }, []);
   useEffect(() => {
-    let filtered = events.filter((item) =>
-      item.venue.location.toLowerCase().includes(destination.toLowerCase())
+    let filtered = beaches.filter((item) =>
+      item.location.toLowerCase().includes(destination.toLowerCase())
     );
     setFilteredList(filtered);
+  }, [destination]);
+
+  useEffect(() => {
+    let filtered = temples.filter((item) =>
+      item.location.toLowerCase().includes(destination.toLowerCase())
+    );
+    setFilteredList2(filtered);
   }, [destination]);
   return (
     <div className={`w-full h-full relative `}>
@@ -212,9 +219,8 @@ const Home = () => {
         autoPlay
         loop
         muted
-        className={`absolute -z-10 w-full h-auto ${
-          theme !== "amber" ? "hidden" : "block"
-        }`}
+        className={`absolute -z-10 w-full h-auto ${theme !== "amber" ? "hidden" : "block"
+          }`}
       >
         <source src={monuments} type="video/mp4" />
       </video>
@@ -222,9 +228,8 @@ const Home = () => {
         autoPlay
         loop
         muted
-        className={`absolute -z-10 w-full h-auto ${
-          theme !== "sky" ? "hidden" : "block"
-        }`}
+        className={`absolute -z-10 w-full h-auto ${theme !== "sky" ? "hidden" : "block"
+          }`}
       >
         <source src={beach} type="video/mp4" />
       </video>
@@ -232,9 +237,8 @@ const Home = () => {
         autoPlay
         loop
         muted
-        className={`absolute -z-10 w-full h-auto ${
-          theme !== "violet" ? "hidden" : "block"
-        }`}
+        className={`absolute -z-10 w-full h-auto ${theme !== "violet" ? "hidden" : "block"
+          }`}
       >
         <source src={event} type="video/mp4" />
       </video>
@@ -242,9 +246,8 @@ const Home = () => {
         autoPlay
         loop
         muted
-        className={`absolute -z-10 w-full h-auto ${
-          theme !== "red" ? "hidden" : "block"
-        }`}
+        className={`absolute -z-10 w-full h-auto ${theme !== "red" ? "hidden" : "block"
+          }`}
       >
         <source src={temple} type="video/mp4" />
       </video>
@@ -252,9 +255,8 @@ const Home = () => {
         autoPlay
         loop
         muted
-        className={`absolute -z-10 w-full h-auto ${
-          theme !== "emerald" ? "hidden" : "block"
-        }`}
+        className={`absolute -z-10 w-full h-auto ${theme !== "emerald" ? "hidden" : "block"
+          }`}
       >
         <source src={mountain} type="video/mp4" />
       </video>
@@ -268,50 +270,48 @@ const Home = () => {
           className="flex flex-col items-center py-36 px-60 gap-6 h-full"
         >
           <h1 className="text-6xl text-gray-100 font-bold text-center leading-snug">
-            {t("heading_main")}
+            {t("Explore the world with your perfect travel companion")}
           </h1>
           <h1 className="text-xl text-gray-300 font-medium text-center leading-normal">
             {t("Join our community of adventurous singles and start your next journey together!")}
           </h1>
           <Link to="/register" className="">
             <button
-              className={`text-gray-100 text-lg px-10 py-6 ${
-                theme == "emerald"
-                  ? "bg-emerald-500"
-                  : theme == "amber"
+              className={`text-gray-100 text-lg capitalize px-10 py-6 ${theme == "emerald"
+                ? "bg-emerald-500"
+                : theme == "amber"
                   ? "bg-amber-500"
                   : theme == "sky"
-                  ? "bg-sky-500"
-                  : theme == "red"
-                  ? "bg-red-500"
-                  : theme == "violet"
-                  ? "bg-violet-500"
-                  : "bg-purple-500"
-              } rounded-full`}
+                    ? "bg-sky-500"
+                    : theme == "red"
+                      ? "bg-red-500"
+                      : theme == "violet"
+                        ? "bg-violet-500"
+                        : "bg-purple-500"
+                } rounded-full`}
             >
-              {t("getstarted")}
+              {t("Get Started")}
             </button>
           </Link>
         </div>
       </div>
       <div
         className={` px-36 bg-gradient-to-t from-white
-     ${
-       theme == "emerald"
-         ? "bg-emerald-200"
-         : theme == "amber"
-         ? "bg-amber-200"
-         : theme == "sky"
-         ? "bg-sky-200"
-         : theme == "red"
-         ? "bg-red-200"
-         : theme == "violet"
-         ? "bg-violet-200"
-         : "bg-purple-200"
-     }`}
+     ${theme == "emerald"
+            ? "bg-emerald-200"
+            : theme == "amber"
+              ? "bg-amber-200"
+              : theme == "sky"
+                ? "bg-sky-200"
+                : theme == "red"
+                  ? "bg-red-200"
+                  : theme == "violet"
+                    ? "bg-violet-200"
+                    : "bg-purple-200"
+          }`}
       >
         <div className="flex flex-col items-center py-8">
-          <h2 className="font-bold text-3xl py-8">Select your theme : </h2>
+          <h2 className="font-bold text-3xl py-8">{t("Select your theme :")} </h2>
           <div className="flex items-center justify-between gap-8 mt-4">
             <button
               data-aos="zoom-in-up"
@@ -323,7 +323,7 @@ const Home = () => {
                 src="https://cdn-icons-png.flaticon.com/512/1020/1020719.png"
                 alt="moun"
               />{" "}
-              Mountain{" "}
+              {t("Mountain")}{" "}
             </button>
             <button
               data-aos="zoom-in-up"
@@ -335,7 +335,7 @@ const Home = () => {
                 src="https://cdn-icons-png.flaticon.com/512/2465/2465330.png"
                 alt="moun"
               />
-              Temples
+              {t("Temples")}
             </button>
             <button
               data-aos="zoom-in-up"
@@ -347,7 +347,7 @@ const Home = () => {
                 className="w-28"
                 alt="moun"
               />{" "}
-              Beaches{" "}
+              {t("Beaches")}{" "}
             </button>
             <button
               data-aos="zoom-in-up"
@@ -359,7 +359,7 @@ const Home = () => {
                 src="https://cdn-icons-png.flaticon.com/512/4719/4719969.png"
                 alt="moun"
               />
-              Events
+              {t("Events")}
             </button>
             <button
               data-aos="zoom-in-up"
@@ -371,63 +371,60 @@ const Home = () => {
                 className="w-28"
                 alt="moun"
               />
-              Monuments{" "}
+              {t("Monuments")}{" "}
             </button>
           </div>
         </div>
         <div className="">
           <div className="w-full h-full py-24">
-            <h1 className="text-black uppercase mb-2">Upcoming events</h1>
+            {/* <h1 className="text-black uppercase mb-2">Upcoming events</h1> */}
             <h1 className="text-black text-4xl font-bold mb-12">
-              Search your{" "}
+              {t("Search your")}{" "}
               <span
-                className={`underline ${
-                  theme == "emerald"
-                    ? "decoration-emerald-500"
-                    : theme == "amber"
+                className={`underline ${theme == "emerald"
+                  ? "decoration-emerald-500"
+                  : theme == "amber"
                     ? "decoration-amber-500"
                     : theme == "sky"
-                    ? "decoration-sky-500"
-                    : theme == "red"
-                    ? "decoration-red-500"
-                    : theme == "violet"
-                    ? "decoration-violet-500"
-                    : "decoration-purple-500"
-                } underline-offset-4`}
+                      ? "decoration-sky-500"
+                      : theme == "red"
+                        ? "decoration-red-500"
+                        : theme == "violet"
+                          ? "decoration-violet-500"
+                          : "decoration-purple-500"
+                  } underline-offset-4`}
               >
-                Holiday
+                {t("Holiday")}
               </span>
             </h1>
             <div
-              className={`relative grid grid-cols-3 w-full rounded-xl shadow-lg p-8 gap-8 ${
-                theme == "emerald"
-                  ? "bg-emerald-200"
-                  : theme == "amber"
+              className={`relative grid grid-cols-3 w-full rounded-xl shadow-lg p-8 gap-8 ${theme == "emerald"
+                ? "bg-emerald-200"
+                : theme == "amber"
                   ? "bg-amber-200"
                   : theme == "sky"
-                  ? "bg-sky-200"
-                  : theme == "red"
-                  ? "bg-red-200"
-                  : theme == "violet"
-                  ? "bg-violet-200"
-                  : "bg-purple-200"
-              } ${
-                theme == "emerald"
+                    ? "bg-sky-200"
+                    : theme == "red"
+                      ? "bg-red-200"
+                      : theme == "violet"
+                        ? "bg-violet-200"
+                        : "bg-purple-200"
+                } ${theme == "emerald"
                   ? "shadow-emerald-700/50"
                   : theme == "amber"
-                  ? "shadow-amber-700/50"
-                  : theme == "sky"
-                  ? "shadow-sky-700/50"
-                  : theme == "red"
-                  ? "shadow-red-700/50"
-                  : theme == "violet"
-                  ? "shadow-violet-700/50"
-                  : "shadow-purple-700/50"
-              }`}
+                    ? "shadow-amber-700/50"
+                    : theme == "sky"
+                      ? "shadow-sky-700/50"
+                      : theme == "red"
+                        ? "shadow-red-700/50"
+                        : theme == "violet"
+                          ? "shadow-violet-700/50"
+                          : "shadow-purple-700/50"
+                }`}
             >
               <div className="">
                 <h1 className="text-gray-800 font-semibold mb-3">
-                  Search your destination:
+                  {t("Search your destination:")}
                 </h1>
                 <input
                   type="text"
@@ -438,7 +435,7 @@ const Home = () => {
               </div>
               <div className="">
                 <h1 className="text-gray-800 font-semibold mb-3">
-                  Search your date:
+                  {t("Search your date:")}
                 </h1>
                 <DatePicker
                   className="w-full focus:outline-none px-4 py-3 bg-gray-100 rounded-full text-sm text-gray-500 font-semibold"
@@ -471,32 +468,41 @@ const Home = () => {
         </Dialog> */}
         <div className="w-full h-full mb-12">
           <h1 className="text-gray-600 text-2xl font-bold mb-12">
-            Most Trending{" "}
+            {t("Most Trending")}{" "}
             <span
-              className={`underline ${
-                theme == "emerald"
-                  ? "decoration-emerald-500"
-                  : theme == "amber"
+              className={`underline ${theme == "emerald"
+                ? "decoration-emerald-500"
+                : theme == "amber"
                   ? "decoration-amber-500"
                   : theme == "sky"
-                  ? "decoration-sky-500"
-                  : theme == "red"
-                  ? "decoration-red-500"
-                  : theme == "violet"
-                  ? "decoration-violet-500"
-                  : "decoration-purple-500"
-              }`}
+                    ? "decoration-sky-500"
+                    : theme == "red"
+                      ? "decoration-red-500"
+                      : theme == "violet"
+                        ? "decoration-violet-500"
+                        : "decoration-purple-500"
+                }`}
             >
-              destinations
+              {t("destinations")}
             </span>
           </h1>
-          <div className="grid grid-cols-3 gap-8">
-            {filteredList !== []
-              ? filteredList.length > 0 &&
-                filteredList.map((item) => <Card data={item} theme={theme} />)
-              : events.length > 0 &&
-                events.map((item) => <Card data={item} theme={theme} />)}
+          {theme == 'sky' ? <div className="grid grid-cols-3 gap-8">
+            {beaches !== []
+              ? beaches.length > 0 &&
+              beaches.map((item) => <Card data={item} theme={theme} />)
+              : beaches.length > 0 &&
+              beaches.map((item) => <Card data={item} theme={theme} />)}
           </div>
+            :
+            <div className="grid grid-cols-3 gap-8">
+              {temples !== []
+                ? temples.length > 0 &&
+                temples.map((item) => <Card data={item} theme={theme} />)
+                : temples.length > 0 &&
+                temples.map((item) => <Card data={item} theme={theme} />)}
+            </div>
+          }
+
         </div>
       </div>
     </div>

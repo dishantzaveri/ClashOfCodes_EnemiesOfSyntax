@@ -61,7 +61,7 @@ export const Navbar = () => {
               : "decoration-purple-500"
           }`}
         >
-          {t("tripright")}
+        tripright
         </h1>
       </div>
       <div className="flex gap-10 items-center">
@@ -79,7 +79,7 @@ export const Navbar = () => {
         </Link>
         <Link to="/profile" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-lg text-gray-${
+            className={`font-semibold capitalize text-lg text-gray-${
               location.pathname === "/profile" ? "900" : "700"
             }`}
           >
@@ -91,7 +91,7 @@ export const Navbar = () => {
         </Link>
         <Link to="/home" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-lg text-gray-${
+            className={`font-semibold capitalize text-lg text-gray-${
               location.pathname === "/home" ? "900" : "700"
             }`}
           >
@@ -103,13 +103,25 @@ export const Navbar = () => {
         </Link>
         <Link to="/itinerary" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-lg text-gray-${
+            className={`font-semibold capitalize text-lg text-gray-${
               location.pathname === "/itinerary" ? "900" : "700"
             }`}
           >
             {t("Itinerary")}
           </h1>
           {location.pathname === "/itinerary" && (
+            <div className="bg-emerald-500 w-4 h-1 rounded"></div>
+          )}
+        </Link>
+        <Link to="/events" className="flex flex-col items-center">
+          <h1
+            className={`font-semibold text-lg text-gray-${
+              location.pathname === "/events" ? "900" : "700"
+            }`}
+          >
+            {t("Events")}
+          </h1>
+          {location.pathname === "/events" && (
             <div className="bg-emerald-500 w-4 h-1 rounded"></div>
           )}
         </Link>

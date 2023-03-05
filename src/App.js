@@ -13,6 +13,7 @@ import Aos from "aos";
 import "aos/dist/aos.css";
 import Itinerary from "./pages/Itinerary";
 import Pairing from "./pages/Pairing";
+import Events from "./pages/Events";
 
 
 function App() {
@@ -42,6 +43,7 @@ function App() {
         <Route path="/pairing" element={<Pairing />} />
         {/* <Route path="/search" element={<Search />} /> */}
         <Route path="/package/:id" element={<Package />} />
+        <Route path="/events" element={<Events />} />
         <Route path="/maps" element={<Maps/>} />
       </Routes>
     </div>
