@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer } from '@react-navigation/native';
 import Blogs from '../screens/Blogs';
 import Calendars from '../screens/Calendar';
+import Location0 from '../screens/location0';
 
 const Tab = createBottomTabNavigator();
 
@@ -38,6 +39,29 @@ const Tabs = () => {
 			<Tab.Screen
 				name='Dashboard'
 				component={Dashboard}
+				options={{
+					tabBarIcon: ({ focused }) => (
+						<View
+							style={{
+								alignItems: 'center',
+								justifyContent: 'center',
+							}}>
+							<Image
+								source={icons.maps}
+								resizeMode='contain'
+								style={{
+									width: 30,
+									height: 30,
+									tintColor: focused ? COLORS.blue : COLORS.gray,
+								}}
+							/>
+						</View>
+					),
+				}}
+			/>
+			<Tab.Screen
+				name='Location0'
+				component={Location0}
 				options={{
 					tabBarIcon: ({ focused }) => (
 						<View

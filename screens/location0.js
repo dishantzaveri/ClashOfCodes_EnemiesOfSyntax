@@ -98,7 +98,7 @@ export default function Location0({ navigation }) {
         />
       </View>
       <View>
-        <TouchableOpacity style={styles.button} onPress={() => selectLocation()}><Text style={{ color: 'white', fontSize: 18 }}>Add A Project</Text></TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={() => selectLocation()}><Text style={{ color: 'white', fontSize: 18 }}>Add A Bookmark</Text></TouchableOpacity>
         <TouchableOpacity style={styles.button1} onPress={() => getProjects()}><Text style={{ color: 'white', fontSize: 16 }}>Refresh</Text></TouchableOpacity>
       </View>
     </View>
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   button: {
     width: 150,
     alignItems: 'center',
-    margin: 10,
+    margin: 20,
     backgroundColor: '#0065ff',
     borderRadius: 7,
   },

@@ -46,7 +46,7 @@ export default function Location1({ navigation }) {
   };
   const selectLocation = () => {
     setVisible(true);
-    // navigation.navigate('AddProject')
+    navigation.navigate('AddProject')
   };
 
   useEffect(() => {
