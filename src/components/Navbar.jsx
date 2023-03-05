@@ -67,9 +67,7 @@ export const Navbar = () => {
       <div className="flex gap-10 items-center">
         <Link to="/" className="flex flex-col items-center">
           <h1
-            className={`font-semibold text-lg text-gray-${
-              location.pathname === "/" ? "900" : "700"
-            }`}
+            className={`font-semibold`}
           >
             {t("home")}
           </h1>

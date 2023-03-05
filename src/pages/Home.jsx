@@ -31,10 +31,7 @@ const Card = ({ data, theme }) => {
   const { t } = useTranslation();
   const [openMap, setOpenMap] = useState(false);
   const [openView, setOpenView] = useState(false);
-  const [center, setCenter] = useState({
-    lat: 13.084,
-    lng: 80.24,
-  });
+  
 
   const markerIcon = new L.Icon({
     iconUrl: mark,
@@ -56,9 +53,7 @@ const Card = ({ data, theme }) => {
         alt=""
       />
       <div className="px-4 py-6">
-        <h1 className="text-gray-600 text-xl font-bold mb-2">
-          {t(data.name)}
-        </h1>
+        <h1 className="text-gray-600 text-xl font-bold mb-2">{t(data.name)}</h1>
         <h1 className="text-gray-400 text-sm mb-4 flex items-center gap-2">
           <HiOutlineLocationMarker className="text-lg" /> {t(data.location)}
         </h1>
@@ -88,10 +83,11 @@ const Card = ({ data, theme }) => {
             Location <BiMap />
           </button>
           <button
-            onClick={() => setOpenMap(true)}
-            className={`flex items-center gap-2 text-white font-semibold uppercase rounded-full px-6 py-2 ${theme == "emerald"
-              ? "bg-emerald-500"
-              : theme == "amber"
+            onClick={() => setOpenView(true)}
+            className={`flex items-center gap-2 text-white font-semibold uppercase rounded-full px-6 py-2 ${
+              theme == "emerald"
+                ? "bg-emerald-500"
+                : theme == "amber"
                 ? "bg-amber-500"
                 : theme == "sky"
                   ? "bg-sky-500"
@@ -113,8 +109,8 @@ const Card = ({ data, theme }) => {
           initialFocus={cancelButtonRef}
           onClose={setOpenMap}
         >
-          <div className="fixed inset-0 z-10 overflow-y-auto">
-            <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+          <div className="fixed inset-0 z-10">
+            <div className="flex min-h-screen min-w-screen items-end justify-center text-center sm:items-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -124,11 +120,14 @@ const Card = ({ data, theme }) => {
                 leaveFrom="opacity-100 translate-y-0 sm:scale-100"
                 leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
               >
-                <Dialog.Panel
-                  className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg"
-                  style={{ width: "700px" }}
-                >
-                  <MapContainer center={center} zoom="12">
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[70vw]">
+                  <MapContainer
+                    center={{
+                      lat: data.venue.latitude,
+                      lng: data.venue.longitude,
+                    }}
+                    zoom="8"
+                  >
                     <TileLayer url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=3DHOohQB1Ufdr3SDSGbf"></TileLayer>
                     <Marker
                       position={[data.latitude, data.longitude]}
@@ -145,6 +144,32 @@ const Card = ({ data, theme }) => {
                       Close
                     </button>
                   </div>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition.Root>
+      <Transition.Root show={openView} as={Fragment}>
+        <Dialog
+          as="div"
+          className="relative z-10"
+          initialFocus={cancelButtonRef}
+          onClose={setOpenView}
+        >
+          <div className="fixed inset-0 z-10">
+            <div className="flex min-h-screen min-w-screen items-end justify-center text-center sm:items-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+              >
+                <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[60vw]">
+                  <iframe width="900" height="450" src="https://www.airpano.com/embed.php?3D=polar-urals" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" framespacing="0" allowfullscreen> </iframe>
                 </Dialog.Panel>
               </Transition.Child>
             </div>
@@ -168,7 +193,7 @@ const Home = () => {
   const [filteredList, setFilteredList] = useState([]);
   const [filteredList2, setFilteredList2] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
-  const [packages, setPackages] = useState([])
+  const [packages, setPackages] = useState([]);
   const user = JSON.parse(localStorage.getItem("user"));
   const { t } = useTranslation();
 
