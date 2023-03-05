@@ -9,6 +9,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { FaStar } from "react-icons/fa";
 import { Popover } from "@headlessui/react";
+import Inventory from "./FriendTable/Inventory";
 import Friends from "./Friends";
 
 const Card = ({ data, setPackages }) => {
@@ -1054,8 +1055,8 @@ const Profile = () => {
           </div>
         </div>
       </Modal> */}
-
-      <Friends />
+      <Inventory />
+      {/* <Friends /> */}
     </div>
   );
 };
