@@ -43,6 +43,7 @@ import Chatting from './screens/Chatting';
 import LocationTracer from './screens/LocationTracer';
 import Options from './screens/Options';
 import Ticket from './screens/Ticket';
+import Dishant from './components/Dishant';
 const app_id = '231614ce9c90ad83';
 const region = 'us';
 const appSetting = new CometChat.AppSettingsBuilder()
@@ -146,8 +147,8 @@ const App = () => {
 					options={{ headerShown: false }}
 				/> */}
 				<Stack.Screen
-					name="LocationTracer"
-					component={LocationTracer}
+					name="Dishant"
+					component={Dishant}
 					options={{ headerShown: false }}
 				/>
 				<Stack.Screen

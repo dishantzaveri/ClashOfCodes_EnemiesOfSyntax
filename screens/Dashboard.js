@@ -65,7 +65,7 @@ const Dashboard = ({ navigation }) => {
 				</View>
 
 				{/* Profile */}
-				<TouchableOpacity onPress={() => navigation.navigate('LocationTracer')}>
+				<TouchableOpacity onPress={() => navigation.navigate('Dishant')}>
 					<Image
 						source={images.profile_pic}
 						resizeMode='contain'
