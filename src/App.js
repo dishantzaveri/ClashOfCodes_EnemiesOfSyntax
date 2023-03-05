@@ -14,6 +14,10 @@ import "aos/dist/aos.css";
 import Itinerary from "./pages/Itinerary";
 import Pairing from "./pages/Pairing";
 import Events from "./pages/Events";
+import Chating from "./pages/Forum/components/Chat";
+
+import NavbarFire from "./pages/Forum/components/Navbar";
+import Forum from "./pages/Forum/components/Forum";
 
 
 function App() {
@@ -45,6 +49,7 @@ function App() {
         <Route path="/package/:id" element={<Package />} />
         <Route path="/events" element={<Events />} />
         <Route path="/maps" element={<Maps/>} />
+        <Route path="/forum" element={<Forum/>}></Route>
       </Routes>
     </div>
   );

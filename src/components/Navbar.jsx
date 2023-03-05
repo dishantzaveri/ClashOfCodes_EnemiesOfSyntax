@@ -64,15 +64,15 @@ export const Navbar = () => {
         tripright
         </h1>
       </div>
-      <div className="flex gap-10 items-center">
+      <div className="flex gap-10 items-center capitalize">
         <Link to="/" className="flex flex-col items-center">
           <h1
-            className={`font-semibold`}
+            className={`capitalize font-semibold`}
           >
             {t("home")}
           </h1>
           {location.pathname === "/" && (
-            <div className={`bg-${color}-500 w-4 h-1 rounded`}></div>
+            <div className={`bg-${color}-500 w-4 capitalize h-1 rounded`}></div>
           )}
         </Link>
         <Link to="/profile" className="flex flex-col items-center">
@@ -118,6 +118,18 @@ export const Navbar = () => {
             }`}
           >
             {t("Events")}
+          </h1>
+          {location.pathname === "/events" && (
+            <div className="bg-emerald-500 w-4 h-1 rounded"></div>
+          )}
+        </Link>
+        <Link to="/forum" className="flex flex-col items-center">
+          <h1
+            className={`font-semibold text-lg text-gray-${
+              location.pathname === "/forum" ? "900" : "700"
+            }`}
+          >
+            {t("Forum")}
           </h1>
           {location.pathname === "/events" && (
             <div className="bg-emerald-500 w-4 h-1 rounded"></div>
