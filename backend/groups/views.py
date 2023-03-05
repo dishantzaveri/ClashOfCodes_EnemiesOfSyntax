@@ -43,3 +43,14 @@ class CommunityUserPostAPI(GenericAPIView):
                 return JsonResponse({"message":"User is already a part of the community"}, status=status.HTTP_400_BAD_REQUEST)
         else:
             return JsonResponse({"message":"data not valid"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class CommunityUserListAPI(ListAPIView):
+    permission_classes = [permissions.AllowAny]
+    serializer_class = CommunityUserListSerializer
+
+    def get_queryset(self):
+        id=self.kwargs.get('id')
+        community = Community.objects.get(id=id)
+        queryset = CommunityUser.objects.filter(community=community)
+        return queryset
