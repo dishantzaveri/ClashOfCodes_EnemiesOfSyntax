@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { Navbar } from "../components/Navbar";
 import { HiOutlineLocationMarker } from "react-icons/hi";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FaStar } from "react-icons/fa";
+import { Popover } from "@headlessui/react";
+import Friends from "./Friends";
 
 const Card = ({ data, setPackages }) => {
   const token = localStorage.getItem("token");
@@ -90,25 +93,27 @@ const Profile = () => {
   const navigate = useNavigate();
   const theme = localStorage.getItem("color");
   const [fill, setFill] = useState(false);
-  const [tripOpen, setTripOpen] = useState(false)
+  const [tripOpen, setTripOpen] = useState(false);
   const [profileData, setProfileData] = useState({
     food_pref: "",
     dob: new Date(),
     sex: "",
   });
   const [trip, setTrip] = useState({
-    destination: '',
+    destination: "",
     start_date: new Date(),
     end_date: new Date(),
     budget: 0,
     trip_type: "",
-    transport: '',
-    company: ''
+    transport: "",
+    company: "",
   });
+  const [tripList, setTripList] = useState([]);
   const [user, setUser] = useState(null);
   const token = localStorage.getItem("token");
   useEffect(() => {
     getUser();
+    getTrip();
   }, []);
   const getUser = () => {
     var config = {
@@ -129,11 +134,30 @@ const Profile = () => {
         setUser(null);
       });
   };
-  const submit = e => {
+  const getTrip = () => {
+    var config = {
+      method: "get",
+      url: "http://127.0.0.1:8000/pairing/trip-detail-get/",
+      headers: {
+        Authorization: "Token " + token,
+      },
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(response.data);
+        setTripList(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+        setTripList(null);
+      });
+  };
+  const submit = (e) => {
     e.preventDefault();
-    let data = profileData
-    data.dob = profileData.dob.toISOString().split("T")[0]
-    console.log(data)
+    let data = profileData;
+    data.dob = profileData.dob.toISOString().split("T")[0];
+    console.log(data);
     var config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -163,14 +187,13 @@ const Profile = () => {
       .catch(function (error) {
         console.log(error);
       });
-  }
-  const submitTrip = e => {
+  };
+  const submitTrip = (e) => {
     e.preventDefault();
-    console.log(trip)
-    let data = trip
-    data.start_date = trip.start_date.toISOString().split("T")[0]
-    data.end_date = trip.end_date.toISOString().split("T")[0]
-    console.log(data)
+    console.log(trip);
+    let data = trip;
+    data.start_date = "2023-03-07";
+    data.end_date = "2023-03-09";
     var config = {
       method: "post",
       maxBodyLength: Infinity,
@@ -183,9 +206,8 @@ const Profile = () => {
 
     axios(config)
       .then(function (response) {
-        console.log(JSON.stringify(response.data));
-        setFill(false);
-        getUser();
+        setTripOpen(false);
+        getTrip();
         toast.success("Trip Added Successfully", {
           position: "top-right",
           autoClose: 5000,
@@ -199,10 +221,11 @@ const Profile = () => {
       })
       .catch(function (error) {
         console.log(error);
+        setTripOpen(false);
       });
-  }
+  };
   const addTrip = () => {
-    if(!user) {
+    if (!user) {
       toast.error("Please complete your profile first", {
         position: "top-right",
         autoClose: 5000,
@@ -213,20 +236,38 @@ const Profile = () => {
         progress: undefined,
         theme: "light",
       });
-      return
+      return;
     }
-    setTripOpen(true)
-  }
+    setTripOpen(true);
+  };
   return (
     <div
       className={`w-full min-h-screen bg-gradient-to-t from-white to-${theme}-200`}
     >
       <Navbar />
       <ToastContainer />
+
       {user ? (
-        <div className="px-24 py-12">
-          <h1 className="text-xl">Hi,</h1>
-          <h1 className="text-4xl font-semibold">{user.user}</h1>
+        <div className="px-24 py-12 flex">
+          <div>
+            <h1 className="text-xl">Hi,</h1>
+            <h1 className="text-4xl font-semibold">{user.user}</h1>
+            <Popover className="relative">
+              <Popover.Button>
+                <div className="float-right grid grid-cols-5">
+                  <FaStar className="text-yellow-400 text-3xl"></FaStar>
+                  <FaStar className=" text-3xl"></FaStar>
+                  <FaStar className=" text-3xl"></FaStar>
+                  <FaStar className=" text-3xl"></FaStar>
+                  <FaStar className=" text-3xl"></FaStar>
+                </div>
+              </Popover.Button>
+              <Popover.Overlay className="fixed inset-0 bg-black opacity-30" />
+              <Popover.Panel className="absolute p-4 z-10 bg-zinc-300 rounded-lg">
+                You need more than 3 rating for solo grouping
+              </Popover.Panel>
+            </Popover>
+          </div>
         </div>
       ) : (
         <div className="px-24 py-12">
@@ -243,6 +284,7 @@ const Profile = () => {
           </div>
         </div>
       )}
+
       <div className="flex justify-between px-24">
         <h1 className="text-3xl font-semibold">Your Trips</h1>
         <button
@@ -252,6 +294,28 @@ const Profile = () => {
           Add Trip
         </button>
       </div>
+      {tripList ? (
+        <div className="px-24 py-12 grid grid-cols-3 gap-4">
+          {tripList?.map((trip) => (
+            <Link
+              to={"/companion/" + trip.id}
+              className="bg-white rounded-lg shadow-lg p-8"
+            >
+              <h1 className="text-2xl font-semibold">{trip.user}</h1>
+              <h1 className="text-gray-400 text-sm mt-2">
+                {trip.start_date} - {trip.end_date}
+              </h1>
+              <h1 className="text-gray-400 text-sm mt-2">{trip.destination}</h1>
+              <h1 className="text-gray-400 text-sm mt-2">{trip.budget}</h1>
+              <h1 className="text-gray-400 text-sm mt-2">{trip.company}</h1>
+              <h1 className="text-gray-400 text-sm mt-2">{trip.transport}</h1>
+              <h1 className="text-gray-400 text-sm mt-2">{trip.trip_type}</h1>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <h1>Loading...</h1>
+      )}
       <Modal
         isOpen={fill}
         onRequestClose={() => setFill(false)}
@@ -668,11 +732,15 @@ const Profile = () => {
                   name="trip_type"
                   id="family_trip"
                   value="family"
-                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                  onClick={(e) =>
+                    setTrip({ ...trip, trip_type: e.target.value })
+                  }
                 />
                 <label
                   className={`border-2 px-3 py-2 text-sm rounded ${
-                    trip.trip_type === "family" ? "border-black font-semibold" : ""
+                    trip.trip_type === "family"
+                      ? "border-black font-semibold"
+                      : ""
                   }`}
                   for="family_trip"
                 >
@@ -684,7 +752,9 @@ const Profile = () => {
                   name="trip_type"
                   id="backpacking"
                   value="backpacking"
-                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                  onClick={(e) =>
+                    setTrip({ ...trip, trip_type: e.target.value })
+                  }
                 />
                 <label
                   className={`border-2 px-3 py-2 text-sm rounded ${
@@ -702,7 +772,9 @@ const Profile = () => {
                   name="trip_type"
                   id="event"
                   value="event"
-                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                  onClick={(e) =>
+                    setTrip({ ...trip, trip_type: e.target.value })
+                  }
                 />
                 <label
                   className={`border-2 px-3 py-2 text-sm rounded ${
@@ -720,7 +792,9 @@ const Profile = () => {
                   name="trip_type"
                   id="adventure"
                   value="adventure"
-                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                  onClick={(e) =>
+                    setTrip({ ...trip, trip_type: e.target.value })
+                  }
                 />
                 <label
                   className={`border-2 px-3 py-2 text-sm rounded ${
@@ -738,7 +812,9 @@ const Profile = () => {
                   name="trip_type"
                   id="business"
                   value="business"
-                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                  onClick={(e) =>
+                    setTrip({ ...trip, trip_type: e.target.value })
+                  }
                 />
                 <label
                   className={`border-2 px-3 py-2 text-sm rounded ${
@@ -978,6 +1054,8 @@ const Profile = () => {
           </div>
         </div>
       </Modal> */}
+
+      <Friends />
     </div>
   );
 };

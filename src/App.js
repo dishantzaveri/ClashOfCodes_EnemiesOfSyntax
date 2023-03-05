@@ -14,6 +14,7 @@ import "aos/dist/aos.css";
 import Itinerary from "./pages/Itinerary";
 import Pairing from "./pages/Pairing";
 import Events from "./pages/Events";
+import Companion from "./pages/Companion";
 
 
 function App() {
@@ -41,8 +42,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/itinerary" element={<Itinerary />} />
         <Route path="/pairing" element={<Pairing />} />
-        {/* <Route path="/search" element={<Search />} /> */}
-        <Route path="/package/:id" element={<Package />} />
+        <Route path="/companion/:id" element={<Companion />} />
         <Route path="/events" element={<Events />} />
         <Route path="/maps" element={<Maps/>} />
       </Routes>

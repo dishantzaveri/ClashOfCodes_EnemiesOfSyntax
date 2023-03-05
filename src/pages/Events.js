@@ -166,13 +166,103 @@ const Events = () => {
         setFilteredList(filtered);
     }, [destination]);
     return (
-        <div className='p-5'>
+        <>
             <Navbar color={theme} />
-            <div className="">
-                <div className="w-full h-full py-24">
-                    <h1 className="text-black uppercase mb-2">Upcoming events</h1>
-                    <h1 className="text-black text-4xl font-bold mb-12">
-                        Search your{" "}
+            <div className='px-24 py-8'>
+                <div className="">
+                    <div className="w-full h-full py-24">
+                        <h1 className="text-black uppercase mb-2">Upcoming events</h1>
+                        <h1 className="text-black text-4xl font-bold mb-12">
+                            Search your{" "}
+                            <span
+                                className={`underline ${theme == "emerald"
+                                    ? "decoration-emerald-500"
+                                    : theme == "amber"
+                                        ? "decoration-amber-500"
+                                        : theme == "sky"
+                                            ? "decoration-sky-500"
+                                            : theme == "red"
+                                                ? "decoration-red-500"
+                                                : theme == "violet"
+                                                    ? "decoration-violet-500"
+                                                    : "decoration-purple-500"
+                                    } underline-offset-4`}
+                            >
+                                Holiday
+                            </span>
+                        </h1>
+                        <div
+                            className={`relative grid grid-cols-3 w-full rounded-xl shadow-lg p-8 gap-8 ${theme == "emerald"
+                                ? "bg-emerald-200"
+                                : theme == "amber"
+                                    ? "bg-amber-200"
+                                    : theme == "sky"
+                                        ? "bg-sky-200"
+                                        : theme == "red"
+                                            ? "bg-red-200"
+                                            : theme == "violet"
+                                                ? "bg-violet-200"
+                                                : "bg-purple-200"
+                                } ${theme == "emerald"
+                                    ? "shadow-emerald-700/50"
+                                    : theme == "amber"
+                                        ? "shadow-amber-700/50"
+                                        : theme == "sky"
+                                            ? "shadow-sky-700/50"
+                                            : theme == "red"
+                                                ? "shadow-red-700/50"
+                                                : theme == "violet"
+                                                    ? "shadow-violet-700/50"
+                                                    : "shadow-purple-700/50"
+                                }`}
+                        >
+                            <div className="">
+                                <h1 className="text-gray-800 font-semibold mb-3">
+                                    Search your destination:
+                                </h1>
+                                <input
+                                    type="text"
+                                    className="w-full focus:outline-none px-4 py-3 bg-gray-100 rounded-full text-sm text-gray-500 font-semibold"
+                                    value={destination}
+                                    onChange={(e) => setDestination(e.target.value)}
+                                />
+                            </div>
+                            <div className="">
+                                <h1 className="text-gray-800 font-semibold mb-3">
+                                    Search your date:
+                                </h1>
+                                <DatePicker
+                                    className="w-full focus:outline-none px-4 py-3 bg-gray-100 rounded-full text-sm text-gray-500 font-semibold"
+                                    selected={startDate}
+                                    onChange={(date) => setStartDate(date)}
+                                />
+                            </div>
+
+                            {/* <button className="absolute -bottom-5 left-[45%] text-white uppercase rounded-full px-6 py-2 bg-gradient-to-r from-cyan-400 to-blue-800 hover:to-cyan-600">
+                    More filters
+                </button> */}
+                        </div>
+                    </div>
+                </div>
+                {/* <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
+            <Dialog.Panel>
+                <Dialog.Title>Deactivate account</Dialog.Title>
+                <Dialog.Description>
+                This will permanently deactivate your account
+                </Dialog.Description>
+
+                <p>
+                Are you sure you want to deactivate your account? All of your data
+                will be permanently removed. This action cannot be undone.
+                </p>
+
+                <button onClick={() => setIsOpen(false)}>Deactivate</button>
+                <button onClick={() => setIsOpen(false)}>Cancel</button>
+            </Dialog.Panel>
+            </Dialog> */}
+                <div className="w-full h-full mb-12">
+                    <h1 className="text-gray-600 text-2xl font-bold mb-12">
+                        Most Trending{" "}
                         <span
                             className={`underline ${theme == "emerald"
                                 ? "decoration-emerald-500"
@@ -185,112 +275,24 @@ const Events = () => {
                                             : theme == "violet"
                                                 ? "decoration-violet-500"
                                                 : "decoration-purple-500"
-                                } underline-offset-4`}
+                                }`}
                         >
-                            Holiday
+                            destinations
                         </span>
                     </h1>
-                    <div
-                        className={`relative grid grid-cols-3 w-full rounded-xl shadow-lg p-8 gap-8 ${theme == "emerald"
-                            ? "bg-emerald-200"
-                            : theme == "amber"
-                                ? "bg-amber-200"
-                                : theme == "sky"
-                                    ? "bg-sky-200"
-                                    : theme == "red"
-                                        ? "bg-red-200"
-                                        : theme == "violet"
-                                            ? "bg-violet-200"
-                                            : "bg-purple-200"
-                            } ${theme == "emerald"
-                                ? "shadow-emerald-700/50"
-                                : theme == "amber"
-                                    ? "shadow-amber-700/50"
-                                    : theme == "sky"
-                                        ? "shadow-sky-700/50"
-                                        : theme == "red"
-                                            ? "shadow-red-700/50"
-                                            : theme == "violet"
-                                                ? "shadow-violet-700/50"
-                                                : "shadow-purple-700/50"
-                            }`}
-                    >
-                        <div className="">
-                            <h1 className="text-gray-800 font-semibold mb-3">
-                                Search your destination:
-                            </h1>
-                            <input
-                                type="text"
-                                className="w-full focus:outline-none px-4 py-3 bg-gray-100 rounded-full text-sm text-gray-500 font-semibold"
-                                value={destination}
-                                onChange={(e) => setDestination(e.target.value)}
-                            />
-                        </div>
-                        <div className="">
-                            <h1 className="text-gray-800 font-semibold mb-3">
-                                Search your date:
-                            </h1>
-                            <DatePicker
-                                className="w-full focus:outline-none px-4 py-3 bg-gray-100 rounded-full text-sm text-gray-500 font-semibold"
-                                selected={startDate}
-                                onChange={(date) => setStartDate(date)}
-                            />
-                        </div>
-
-                        {/* <button className="absolute -bottom-5 left-[45%] text-white uppercase rounded-full px-6 py-2 bg-gradient-to-r from-cyan-400 to-blue-800 hover:to-cyan-600">
-                More filters
-              </button> */}
+                    <div className="grid grid-cols-3 gap-8">
+                        {filteredList !== []
+                            ? filteredList.length > 0 &&
+                            filteredList.map((item) => <Card data={item} theme={theme} />)
+                            : events.length > 0 &&
+                            events.map((item) => <Card data={item} theme={theme} />)}
                     </div>
                 </div>
+
+                {/* <MyCalendar /> */}
+                <Demo />
             </div>
-            {/* <Dialog open={isOpen} onClose={() => setIsOpen(false)}>
-          <Dialog.Panel>
-            <Dialog.Title>Deactivate account</Dialog.Title>
-            <Dialog.Description>
-              This will permanently deactivate your account
-            </Dialog.Description>
-
-            <p>
-              Are you sure you want to deactivate your account? All of your data
-              will be permanently removed. This action cannot be undone.
-            </p>
-
-            <button onClick={() => setIsOpen(false)}>Deactivate</button>
-            <button onClick={() => setIsOpen(false)}>Cancel</button>
-          </Dialog.Panel>
-        </Dialog> */}
-            <div className="w-full h-full mb-12">
-                <h1 className="text-gray-600 text-2xl font-bold mb-12">
-                    Most Trending{" "}
-                    <span
-                        className={`underline ${theme == "emerald"
-                            ? "decoration-emerald-500"
-                            : theme == "amber"
-                                ? "decoration-amber-500"
-                                : theme == "sky"
-                                    ? "decoration-sky-500"
-                                    : theme == "red"
-                                        ? "decoration-red-500"
-                                        : theme == "violet"
-                                            ? "decoration-violet-500"
-                                            : "decoration-purple-500"
-                            }`}
-                    >
-                        destinations
-                    </span>
-                </h1>
-                <div className="grid grid-cols-3 gap-8">
-                    {filteredList !== []
-                        ? filteredList.length > 0 &&
-                        filteredList.map((item) => <Card data={item} theme={theme} />)
-                        : events.length > 0 &&
-                        events.map((item) => <Card data={item} theme={theme} />)}
-                </div>
-            </div>
-
-            {/* <MyCalendar /> */}
-            <Demo />
-        </div>
+        </>
     )
 }
 
