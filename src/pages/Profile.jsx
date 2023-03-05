@@ -109,7 +109,9 @@ const Profile = () => {
     transport: "",
     company: "",
   });
-  const [tripList, setTripList] = useState([]);
+  const [tripList, setTripList] = useState([
+    
+  ]);
   const [user, setUser] = useState(null);
   const token = localStorage.getItem("token");
   useEffect(() => {

@@ -65,36 +65,36 @@ const Itinerary = () => {
   const [mustVisit, setVisit] = useState(null);
   const [mustVisit2, setVisit2] = useState(null);
   const [count, setCount] = useState(1);
-  const [modal, setModal] = useState(false) 
+  const [modal, setModal] = useState(false)
   const numbers = [...Array(count).keys()];
   const doc = new jsPDF();
 
   const reportTemplateRef = useRef(null);
 
   const handleGeneratePdf = () => {
-		const doc = new jsPDF({
-			format: 'a4',
-			unit: 'px',
-		});
+    const doc = new jsPDF({
+      format: 'a4',
+      unit: 'px',
+    });
 
-		// Adding the fonts.
-		doc.setFont('Inter-Regular', 'normal');
+    // Adding the fonts.
+    doc.setFont('Inter-Regular', 'normal');
 
-		doc.html(reportTemplateRef.current, {
-			async callback(doc) {
-				await doc.save('document');
-			},
-		});
-	};
+    doc.html(reportTemplateRef.current, {
+      async callback(doc) {
+        await doc.save('document');
+      },
+    });
+  };
 
   const downloadPdfDocument = (rootElementId) => {
     const input = document.getElementById(rootElementId);
     html2canvas(input)
       .then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-          const pdf = new jsPDF();
-          pdf.addImage(imgData, 'JPEG', 0, 0);
-          pdf.save("download.pdf");
+        const imgData = canvas.toDataURL('image/png');
+        const pdf = new jsPDF();
+        pdf.addImage(imgData, 'JPEG', 0, 0);
+        pdf.save("download.pdf");
       })
   }
 
@@ -105,7 +105,7 @@ const Itinerary = () => {
       method: 'get',
       url: 'https://test.api.amadeus.com/v1/reference-data/locations/hotels/by-city?cityCode=DEL',
       headers: {
-        'Authorization': 'Bearer tDAp0jMg6aNk4WXLVDnJzekIaj5V'
+        'Authorization': 'Bearer a1nWI0r9MQ5fnEgNKKYG5GK5psy8'
       },
     };
     axios(config)
@@ -113,7 +113,7 @@ const Itinerary = () => {
         // console.log(JSON.stringify(response.data));
         setVisit2(response.data.data.slice(1, 5));
         // mustVisit2
-        
+
         console.log(mustVisit2);
       })
       .catch(function (error) {
@@ -125,7 +125,7 @@ const Itinerary = () => {
       method: 'get',
       url: 'https://test.api.amadeus.com/v1/reference-data/recommended-locations?cityCodes=PAR&travelerCountryCode=FR',
       headers: {
-        'Authorization': 'Bearer tDAp0jMg6aNk4WXLVDnJzekIaj5V'
+        'Authorization': 'Bearer a1nWI0r9MQ5fnEgNKKYG5GK5psy8'
       }
     };
 
@@ -228,7 +228,7 @@ const Itinerary = () => {
               <Tile data="Gluten Free" setConveniences={setConveniences} />
             </div>
           </div>
-          
+
           <div className="flex flex-col gap-2 mt-4">
             <h1 className="text-lg font-semibold">Travel Conveniences</h1>
             <div className="flex flex-wrap gap-2">
@@ -255,11 +255,12 @@ const Itinerary = () => {
           >
             Apply
           </button>
-          
+
+          <button className="w-full mt-2 bg-gray-900 text-emerald-100 text-center px-4 py-2 rounded-xl shadow-lg" onClick={handleGeneratePdf}>Download Itinerary</button>
         </div>
         <div className="w-2/3">
           <div className="">
-          <Maps />
+            <Maps />
 
           </div>
         </div>
@@ -281,7 +282,7 @@ const Itinerary = () => {
                   <Disclosure.Panel className="px-4 pt-4 pb-2 text-sm text-gray-500">
                     <h4>Hotels: </h4>
                     {
-                      mustVisit2 != null && 
+                      mustVisit2 != null &&
                       mustVisit2.map((k) => {
                         return k.name
                       })
@@ -290,36 +291,41 @@ const Itinerary = () => {
                 </>
               )}
             </Disclosure>
+
           })}
+
           <Modal
             open={modal}
             onRequestClose={() => setModal(false)}
             style={customStyles}
           >
-          <>
-
-            <div className="w-1/2 bg-white rounded-lg shadow-lg p-8" ref={reportTemplateRef}>
-            Day 1:
-            {mustVisit2 && <h1>{mustVisit2[0].name}</h1>}
-            Arrive in Delhi by train in the morning and check in at your hotel.
-            Have breakfast at Karim's in Old Delhi, which is known for its delicious non-veg food.
-            Visit Red Fort, which is a UNESCO World Heritage Site and an iconic landmark of Delhi.
-            In the evening, go on a food tour of Delhi and try out some of the famous non-veg street food like kebabs, tikkas, and biryanis.
-            Day 2:
-            {mustVisit2 && <h1>{mustVisit2[1].name}</h1>}
-            Start your day with a visit to Humayun's Tomb, another UNESCO World Heritage Site and a beautiful example of Mughal architecture.
-            Head to Hauz Khas Village, a trendy neighborhood with a variety of cafes, restaurants, and boutiques. You can have lunch at Yeti, which serves delicious Nepali cuisine and has a beautiful rooftop view.
-            In the evening, go on a heritage walk in the streets of Old Delhi and explore the narrow alleys and markets. You can also take a rickshaw ride through the bustling streets and experience the chaos and vibrancy of the city.
-            Day 3:
-            {mustVisit2 && <h1>{mustVisit2[2].name}</h1>}
-            Take a day trip to the Neemrana Fort Palace, which is located about 2 hours from Delhi by train. This 15th-century fort has been converted into a heritage hotel and is a popular weekend getaway from Delhi. You can enjoy a buffet lunch at the palace and indulge in some adventure activities like ziplining, flying fox, and camel rides.
-            Return to Delhi in the evening and have dinner at Moti Mahal Delux, a famous restaurant chain known for its butter chicken and other non-veg delicacies.
-            </div>
-            <button className="w-full mt-2 bg-gray-900 text-emerald-100 text-center px-4 py-2 rounded-xl shadow-lg" onClick={handleGeneratePdf}>Download Itinerary</button>
-          </>
+            <>
+              <button className="w-full mt-2 bg-gray-900 text-emerald-100 text-center px-4 py-2 rounded-xl shadow-lg" onClick={handleGeneratePdf}>Download Itinerary</button>
+            </>
           </Modal>
         </div>
       </div>
+      <center>
+          <h1 className="text-2xl font-bold p-5">Detailed Itinerary</h1>
+        {mustVisit2 && <div className="w-1/2 self-center bg-white rounded-lg shadow-lg p-8" ref={reportTemplateRef}>
+          Day 1:
+          {mustVisit2 && <h1>{mustVisit2[0].name}</h1>}
+          Arrive in Delhi by train in the morning and check in at your hotel.
+          Have breakfast at Karim's in Old Delhi, which is known for its delicious non-veg food.
+          Visit Red Fort, which is a UNESCO World Heritage Site and an iconic landmark of Delhi.
+          In the evening, go on a food tour of Delhi and try out some of the famous non-veg street food like kebabs, tikkas, and biryanis.
+          Day 2:
+          {mustVisit2 && <h1>{mustVisit2[1].name}</h1>}
+          Start your day with a visit to Humayun's Tomb, another UNESCO World Heritage Site and a beautiful example of Mughal architecture.
+          Head to Hauz Khas Village, a trendy neighborhood with a variety of cafes, restaurants, and boutiques. You can have lunch at Yeti, which serves delicious Nepali cuisine and has a beautiful rooftop view.
+          In the evening, go on a heritage walk in the streets of Old Delhi and explore the narrow alleys and markets. You can also take a rickshaw ride through the bustling streets and experience the chaos and vibrancy of the city.
+          Day 3:
+          {mustVisit2 && <h1>{mustVisit2[2].name}</h1>}
+          Take a day trip to the Neemrana Fort Palace, which is located about 2 hours from Delhi by train. This 15th-century fort has been converted into a heritage hotel and is a popular weekend getaway from Delhi. You can enjoy a buffet lunch at the palace and indulge in some adventure activities like ziplining, flying fox, and camel rides.
+          Return to Delhi in the evening and have dinner at Moti Mahal Delux, a famous restaurant chain known for its butter chicken and other non-veg delicacies.
+        </div>}
+      </center>
+
     </div >
   );
 };
