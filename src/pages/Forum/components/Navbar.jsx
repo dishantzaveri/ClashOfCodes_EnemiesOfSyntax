@@ -2,7 +2,7 @@ import React from 'react';
 import SignIn from '../components/SignIn'
 import LogOut from './LogOut'
 import Chating from './Chat';
-import { auth } from '../../firebase'
+import { auth } from './firebase'
 
 import { useAuthState } from 'react-firebase-hooks/auth'
 const style = {

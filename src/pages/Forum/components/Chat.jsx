@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Message from './Message';
 import SendMessage from './SendMessage';
-import { db } from "../../firebase"
+import { db } from "./firebase"
 import { query, collection, orderBy, onSnapshot } from 'firebase/firestore';
 
 const style = {

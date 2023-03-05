@@ -2,7 +2,7 @@ import React from 'react';
 import NavbarFire from './Navbar';
 import Chating from './Chat';
 
-import { auth } from '../../firebase';
+import { auth } from './firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { Navbar } from '../../../components/Navbar';
 
