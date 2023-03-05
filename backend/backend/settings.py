@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'location',
     'chatgpt',
     'scraper',
+    'groups',
 ]
 
 MIDDLEWARE = [
