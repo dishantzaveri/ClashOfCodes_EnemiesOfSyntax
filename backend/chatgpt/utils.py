@@ -2,7 +2,7 @@ import os
 import openai
 
 def generate_chatgpt(prompt):
-    openai.api_key = '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'
+    openai.api_key = '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'
 
     response = openai.Completion.create(
     model="text-davinci-003",
