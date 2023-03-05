@@ -4,6 +4,7 @@ import { HiOutlineLocationMarker } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-modal";
 import axios from "axios";
+import DatePicker from "react-datepicker";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -87,86 +88,32 @@ const Card = ({ data, setPackages }) => {
 
 const Profile = () => {
   const navigate = useNavigate();
-  const [packageData, setPackageData] = useState({
-    name: "",
-    price: "",
-    description: "",
-    location: "",
-    image: "",
+  const theme = localStorage.getItem("color");
+  const [fill, setFill] = useState(false);
+  const [tripOpen, setTripOpen] = useState(false)
+  const [profileData, setProfileData] = useState({
+    food_pref: "",
+    dob: new Date(),
+    sex: "",
   });
-  const [addPackage, setAddPackage] = useState(false);
-  const [edit, setEdit] = useState(false);
-  const [packages, setPackages] = useState([]);
+  const [trip, setTrip] = useState({
+    destination: '',
+    start_date: new Date(),
+    end_date: new Date(),
+    budget: 0,
+    trip_type: "",
+    transport: '',
+    company: ''
+  });
+  const [user, setUser] = useState(null);
   const token = localStorage.getItem("token");
-  const [profile, setProfile] = useState(null);
   useEffect(() => {
-    getProfile();
-    getPackages();
+    getUser();
   }, []);
-  function loadScript(src) {
-    return new Promise((resolve) => {
-      const script = document.createElement("script");
-      script.src = src;
-      script.onload = () => {
-        resolve(true);
-      };
-      script.onerror = () => {
-        resolve(false);
-      };
-      document.body.appendChild(script);
-    });
-  }
-  const paymentHandler = async () => {
-    const res = await loadScript(
-      "https://checkout.razorpay.com/v1/checkout.js"
-    );
-    const options = {
-      key: 'rzp_test_P5uGKApOVIZYNS',
-      amount: parseInt(packageData.price) * 10,
-      name: "Payments",
-      description: "Donate yourself some time",
-      handler: (response) => {
-        addPackageHandler()
-      },
-      prefill: {
-        name: "Shashank Shekhar",
-        email: "example@email.com",
-      },
-      notes: {
-        address: "Patna,India",
-      },
-      theme: {
-        color: "#3b82f6",
-      },
-    };
-    const rzp1 = new window.Razorpay(options);
-    rzp1.open();
-  };
-  const logout = () => {
-    localStorage.removeItem("user");
-    navigate("/");
-  };
-  const getProfile = () => {
+  const getUser = () => {
     var config = {
       method: "get",
-      url: "http://vismayvora.pythonanywhere.com/account/profile",
-      headers: {
-        Authorization: "Token " + token,
-      },
-    };
-    axios(config)
-      .then(function (response) {
-        console.log(response.data);
-        setProfile(response.data);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-  const getPackages = () => {
-    var config = {
-      method: "get",
-      url: "http://vismayvora.pythonanywhere.com/tourist_app/tourpackage",
+      url: "http://127.0.0.1:8000/pairing/user-detail/",
       headers: {
         Authorization: "Token " + token,
       },
@@ -174,81 +121,655 @@ const Profile = () => {
 
     axios(config)
       .then(function (response) {
-        console.log(response.data);
-        setPackages(response.data);
+        console.log(response.data.data);
+        setUser(response.data.data);
       })
       .catch(function (error) {
         console.log(error);
+        setUser(null);
       });
   };
-  const addPackageHandler = () => {
-    console.log(packageData);
-    if (
-      packageData.name &&
-      packageData.price &&
-      packageData.description &&
-      packageData.location &&
-      packageData.image
-    ) {
-      var data = new FormData();
-      data.append("price", packageData.price);
-      data.append("package_name", packageData.name);
-      data.append("description", packageData.description);
-      data.append("image", packageData.image);
-      data.append("location", packageData.location);
-      var config = {
-        method: "post",
-        url: "http://vismayvora.pythonanywhere.com/tourist_app/tourpackage",
-        headers: {
-          Authorization: "Token " + token,
-        },
-        data: data,
-      };
-
-      axios(config)
-        .then(function (response) {
-          setAddPackage(false);
-          toast.success("Package Added Successfully", {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "light",
-          });
-          getPackages();
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    }
-  };
-  const editHandler = () => {
+  const submit = e => {
+    e.preventDefault();
+    let data = profileData
+    data.dob = profileData.dob.toISOString().split("T")[0]
+    console.log(data)
     var config = {
-      method: "patch",
-      url: "http://vismayvora.pythonanywhere.com/account/profile/",
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://127.0.0.1:8000/pairing/user-detail/",
       headers: {
         Authorization: "Token " + token,
       },
-      data: profile,
+      data: data,
     };
 
     axios(config)
       .then(function (response) {
         console.log(JSON.stringify(response.data));
-        setEdit(false);
+        setFill(false);
+        getUser();
+        toast.success("Profile Updated Successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
       })
       .catch(function (error) {
         console.log(error);
-        setEdit(false);
       });
-  };
+  }
+  const submitTrip = e => {
+    e.preventDefault();
+    console.log(trip)
+    let data = trip
+    data.start_date = trip.start_date.toISOString().split("T")[0]
+    data.end_date = trip.end_date.toISOString().split("T")[0]
+    console.log(data)
+    var config = {
+      method: "post",
+      maxBodyLength: Infinity,
+      url: "http://127.0.0.1:8000/pairing/trip-detail-post/",
+      headers: {
+        Authorization: "Token " + token,
+      },
+      data: data,
+    };
+
+    axios(config)
+      .then(function (response) {
+        console.log(JSON.stringify(response.data));
+        setFill(false);
+        getUser();
+        toast.success("Trip Added Successfully", {
+          position: "top-right",
+          autoClose: 5000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+        });
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }
+  const addTrip = () => {
+    if(!user) {
+      toast.error("Please complete your profile first", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+      });
+      return
+    }
+    setTripOpen(true)
+  }
   return (
-    <div className="w-full">
+    <div
+      className={`w-full min-h-screen bg-gradient-to-t from-white to-${theme}-200`}
+    >
       <Navbar />
       <ToastContainer />
+      {user ? (
+        <div className="px-24 py-12">
+          <h1 className="text-xl">Hi,</h1>
+          <h1 className="text-4xl font-semibold">{user.user}</h1>
+        </div>
+      ) : (
+        <div className="px-24 py-12">
+          <h1 className="text-xl">Hi,</h1>
+          <h1 className="text-4xl font-semibold">User</h1>
+          <div className="flex gap-2 items-center outline outline-2 outline-orange-500 rounded px-4 py-2 mt-2">
+            <h1>Please complete your profile by filling the following form.</h1>
+            <h1
+              onClick={() => setFill(true)}
+              className="cursor-pointer text-blue-600 text-sm font-semibold underline"
+            >
+              Form
+            </h1>
+          </div>
+        </div>
+      )}
+      <div className="flex justify-between px-24">
+        <h1 className="text-3xl font-semibold">Your Trips</h1>
+        <button
+          className={`text-gray-100 text-lg px-6 py-2 bg-emerald-500 rounded-full`}
+          onClick={() => addTrip()}
+        >
+          Add Trip
+        </button>
+      </div>
+      <Modal
+        isOpen={fill}
+        onRequestClose={() => setFill(false)}
+        className="w-screen h-screen flex items-center justify-center"
+      >
+        <div className="w-1/3 bg-white rounded-lg shadow-lg p-8">
+          <h1 className="text-3xl font-semibold">Fill Profile</h1>
+          <form className="flex flex-col mt-4" onSubmit={(e) => submit(e)}>
+            <h1 className="text-gray-400 mb-2">Food Preference</h1>
+            <div className="flex gap-3">
+              <input
+                className="hidden"
+                type="radio"
+                name="food_pref"
+                id="veg"
+                value="veg"
+                onClick={(e) =>
+                  setProfileData({ ...profileData, food_pref: e.target.value })
+                }
+              />
+              <label
+                className={`border-2 px-3 py-2 text-sm rounded ${
+                  profileData.food_pref === "veg"
+                    ? "border-black font-semibold"
+                    : ""
+                }`}
+                for="veg"
+              >
+                <h1 className="text-gray-800">Veg</h1>
+              </label>
+              <input
+                className="hidden"
+                type="radio"
+                name="food_pref"
+                id="non-veg"
+                value="non-veg"
+                onClick={(e) =>
+                  setProfileData({ ...profileData, food_pref: e.target.value })
+                }
+              />
+              <label
+                className={`border-2 px-3 py-2 text-sm rounded ${
+                  profileData.food_pref === "non-veg"
+                    ? "border-black font-semibold"
+                    : ""
+                }`}
+                for="non-veg"
+              >
+                <h1 className="text-gray-800">Non-Veg</h1>
+              </label>
+              <input
+                className="hidden"
+                type="radio"
+                name="food_pref"
+                id="jain"
+                value="jain"
+                onClick={(e) =>
+                  setProfileData({ ...profileData, food_pref: e.target.value })
+                }
+              />
+              <label
+                className={`border-2 px-3 py-2 text-sm rounded ${
+                  profileData.food_pref === "jain"
+                    ? "border-black font-semibold"
+                    : ""
+                }`}
+                for="jain"
+              >
+                <h1 className="text-gray-800">Jain</h1>
+              </label>
+              <input
+                className="hidden"
+                type="radio"
+                name="food_pref"
+                id="vegan"
+                value="vegan"
+                onClick={(e) =>
+                  setProfileData({ ...profileData, food_pref: e.target.value })
+                }
+              />
+              <label
+                className={`border-2 px-3 py-2 text-sm rounded ${
+                  profileData.food_pref === "vegan"
+                    ? "border-black font-semibold"
+                    : ""
+                }`}
+                for="vegan"
+              >
+                <h1 className="text-gray-800">Vegan</h1>
+              </label>
+              <input
+                className="hidden"
+                type="radio"
+                name="food_pref"
+                id="gluten-free"
+                value="gluten-free"
+                onClick={(e) =>
+                  setProfileData({ ...profileData, food_pref: e.target.value })
+                }
+              />
+              <label
+                className={`border-2 px-3 py-2 text-sm rounded ${
+                  profileData.food_pref === "gluten-free"
+                    ? "border-black font-semibold"
+                    : ""
+                }`}
+                for="gluten-free"
+              >
+                <h1 className="text-gray-800">Gluten Free</h1>
+              </label>
+            </div>
+            <div className="flex gap-6">
+              <div className="">
+                <h1 className="text-gray-400 mt-4 mb-2">Sex</h1>
+                <div className="flex gap-3">
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="sex"
+                    id="male"
+                    value="male"
+                    onClick={(e) =>
+                      setProfileData({ ...profileData, sex: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      profileData.sex === "male"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="male"
+                  >
+                    <h1 className="text-gray-800">Male</h1>
+                  </label>
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="sex"
+                    id="female"
+                    value="female"
+                    onClick={(e) =>
+                      setProfileData({ ...profileData, sex: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      profileData.sex === "female"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="female"
+                  >
+                    <h1 className="text-gray-800">Female</h1>
+                  </label>
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="sex"
+                    id="other"
+                    value="other"
+                    onClick={(e) =>
+                      setProfileData({ ...profileData, sex: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      profileData.sex === "other"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="other"
+                  >
+                    <h1 className="text-gray-800">Other</h1>
+                  </label>
+                </div>
+              </div>
+              <div className="flex-1 mt-4 flex-grow">
+                <label className="text-gray-400">Date of Birth</label>
+                <DatePicker
+                  className="px-4 py-2 mt-2 shadow text-sm text-gray-500 rounded focus:outline-none w-full"
+                  selected={profileData.dob}
+                  onChange={(date) =>
+                    setProfileData({ ...profileData, dob: date })
+                  }
+                />
+              </div>
+            </div>
+            <div className="flex mt-6 justify-between">
+              <button
+                onClick={(e) => submit()}
+                className="flex items-center gap-2 bg-emerald-500 text-white font-semibold uppercase rounded-full px-6 py-2"
+              >
+                Submit
+              </button>
+              <button
+                onClick={() => setFill(false)}
+                className="flex items-center gap-2 bg-red-500 text-white font-semibold uppercase rounded-full px-6 py-2"
+              >
+                Close
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+      <Modal
+        isOpen={tripOpen}
+        onRequestClose={() => setTripOpen(false)}
+        className="w-screen h-screen flex items-center justify-center"
+      >
+        <div className="w-1/2 bg-white rounded-lg shadow-lg p-8">
+          <h1 className="text-3xl font-semibold">Trip Planner</h1>
+          <form className="flex flex-col mt-4" onSubmit={(e) => submitTrip(e)}>
+            <div className="flex gap-4">
+              <div className="flex-1">
+                <h1 className="text-gray-400 mb-2">Destination</h1>
+                <input
+                  className="w-full bg-gray-100 px-4 py-2 rounded shadow focus:outline-none"
+                  type="text"
+                  placeholder="Mumbai..."
+                  value={trip.destination}
+                  onChange={(e) =>
+                    setTrip({ ...trip, destination: e.target.value })
+                  }
+                />
+              </div>
+              <div className="flex-1">
+                <h1 className="text-gray-400 mb-2">Budget</h1>
+                <input
+                  className="w-full bg-gray-100 px-4 py-2 rounded shadow focus:outline-none"
+                  type="number"
+                  min={1000}
+                  value={trip.budget}
+                  onChange={(e) => setTrip({ ...trip, budget: e.target.value })}
+                />
+              </div>
+            </div>
+            <div className="flex gap-4 mt-4">
+              <div className="flex-1">
+                <label className="text-gray-400">Start Date</label>
+                <DatePicker
+                  className="px-4 py-2 mt-2 shadow text-sm bg-gray-100 text-gray-500 rounded focus:outline-none w-full"
+                  selected={trip.start_date}
+                  onChange={(date) => setTrip({ ...trip, start_date: date })}
+                />
+              </div>
+              <div className="flex-1">
+                <label className="text-gray-400">End Date</label>
+                <DatePicker
+                  className="px-4 py-2 mt-2 shadow text-sm bg-gray-100 text-gray-500 rounded focus:outline-none w-full"
+                  selected={trip.end_date}
+                  onChange={(date) => setTrip({ ...trip, end_date: date })}
+                />
+              </div>
+            </div>
+            <div className="flex mt-4">
+              <div className="flex-1">
+                <h1 className="text-gray-400 mb-2">Transport</h1>
+                <div className="flex gap-3">
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="transport"
+                    id="car"
+                    value="car"
+                    onClick={(e) =>
+                      setTrip({ ...trip, transport: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      trip.transport === "car"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="car"
+                  >
+                    <h1 className="text-gray-800">Car</h1>
+                  </label>
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="transport"
+                    id="bike"
+                    value="bike"
+                    onClick={(e) =>
+                      setTrip({ ...trip, transport: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      trip.transport === "bike"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="bike"
+                  >
+                    <h1 className="text-gray-800">Bike</h1>
+                  </label>
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="transport"
+                    id="plane"
+                    value="plane"
+                    onClick={(e) =>
+                      setTrip({ ...trip, transport: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      trip.transport === "plane"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="plane"
+                  >
+                    <h1 className="text-gray-800">Plane</h1>
+                  </label>
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="transport"
+                    id="train"
+                    value="train"
+                    onClick={(e) =>
+                      setTrip({ ...trip, transport: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      trip.transport === "train"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="train"
+                  >
+                    <h1 className="text-gray-800">Train</h1>
+                  </label>
+                </div>
+              </div>
+              <div className="flex-1">
+                <h1 className="text-gray-400 mb-2">Company</h1>
+                <div className="flex gap-3">
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="company"
+                    id="solo"
+                    value="solo"
+                    onClick={(e) =>
+                      setTrip({ ...trip, company: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      trip.company === "solo"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="solo"
+                  >
+                    <h1 className="text-gray-800">Solo</h1>
+                  </label>
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="company"
+                    id="family"
+                    value="family"
+                    onClick={(e) =>
+                      setTrip({ ...trip, company: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      trip.company === "family"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="family"
+                  >
+                    <h1 className="text-gray-800">Family</h1>
+                  </label>
+                  <input
+                    className="hidden"
+                    type="radio"
+                    name="company"
+                    id="friends"
+                    value="friends"
+                    onClick={(e) =>
+                      setTrip({ ...trip, company: e.target.value })
+                    }
+                  />
+                  <label
+                    className={`border-2 px-3 py-2 text-sm rounded ${
+                      trip.company === "friends"
+                        ? "border-black font-semibold"
+                        : ""
+                    }`}
+                    for="friends"
+                  >
+                    <h1 className="text-gray-800">Friends</h1>
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div className="flex-1 mt-4">
+              <h1 className="text-gray-400 mb-2">Trip type</h1>
+              <div className="flex gap-3">
+                <input
+                  className="hidden"
+                  type="radio"
+                  name="trip_type"
+                  id="family_trip"
+                  value="family"
+                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                />
+                <label
+                  className={`border-2 px-3 py-2 text-sm rounded ${
+                    trip.trip_type === "family" ? "border-black font-semibold" : ""
+                  }`}
+                  for="family_trip"
+                >
+                  <h1 className="text-gray-800">Family</h1>
+                </label>
+                <input
+                  className="hidden"
+                  type="radio"
+                  name="trip_type"
+                  id="backpacking"
+                  value="backpacking"
+                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                />
+                <label
+                  className={`border-2 px-3 py-2 text-sm rounded ${
+                    trip.trip_type === "backpacking"
+                      ? "border-black font-semibold"
+                      : ""
+                  }`}
+                  for="backpacking"
+                >
+                  <h1 className="text-gray-800">Backpacking</h1>
+                </label>
+                <input
+                  className="hidden"
+                  type="radio"
+                  name="trip_type"
+                  id="event"
+                  value="event"
+                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                />
+                <label
+                  className={`border-2 px-3 py-2 text-sm rounded ${
+                    trip.trip_type === "event"
+                      ? "border-black font-semibold"
+                      : ""
+                  }`}
+                  for="event"
+                >
+                  <h1 className="text-gray-800">Event</h1>
+                </label>
+                <input
+                  className="hidden"
+                  type="radio"
+                  name="trip_type"
+                  id="adventure"
+                  value="adventure"
+                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                />
+                <label
+                  className={`border-2 px-3 py-2 text-sm rounded ${
+                    trip.trip_type === "adventure"
+                      ? "border-black font-semibold"
+                      : ""
+                  }`}
+                  for="adventure"
+                >
+                  <h1 className="text-gray-800">Adventure</h1>
+                </label>
+                <input
+                  className="hidden"
+                  type="radio"
+                  name="trip_type"
+                  id="business"
+                  value="business"
+                  onClick={(e) => setTrip({ ...trip, trip_type: e.target.value })}
+                />
+                <label
+                  className={`border-2 px-3 py-2 text-sm rounded ${
+                    trip.trip_type === "business"
+                      ? "border-black font-semibold"
+                      : ""
+                  }`}
+                  for="business"
+                >
+                  <h1 className="text-gray-800">Business</h1>
+                </label>
+              </div>
+            </div>
+            <div className="flex mt-6 justify-between">
+              <button
+                onClick={(e) => submitTrip()}
+                className="flex items-center gap-2 bg-emerald-500 text-white font-semibold uppercase rounded-full px-6 py-2"
+              >
+                Submit
+              </button>
+              <button
+                onClick={() => setTripOpen(false)}
+                className="flex items-center gap-2 bg-red-500 text-white font-semibold uppercase rounded-full px-6 py-2"
+              >
+                Close
+              </button>
+            </div>
+          </form>
+        </div>
+      </Modal>
+
       {/* <div className="px-36 py-8 bg-gradient-to-r from-cyan-400 to-blue-800">
         <h1 className="text-2xl text-gray-600 font-bold">Profile</h1>
         <div className="flex justify-between bg-white rounded-lg shadow-lg p-6 mt-4">

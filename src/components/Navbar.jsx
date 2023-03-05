@@ -48,15 +48,15 @@ export const Navbar = () => {
         <img className="w-8" src={logo} alt="" />
         <h1
           className={`text-2xl font-bold underline ${
-            color == "emerald"
+            color === "emerald"
               ? "decoration-emerald-500"
-              : color == "amber"
+              : color === "amber"
               ? "decoration-amber-500"
-              : color == "sky"
+              : color === "sky"
               ? "decoration-sky-500"
-              : color == "red"
+              : color === "red"
               ? "decoration-red-500"
-              : color == "violet"
+              : color === "violet"
               ? "decoration-violet-500"
               : "decoration-purple-500"
           }`}
@@ -179,12 +179,12 @@ export const Navbar = () => {
         </div>
       ) : (
         <div className="flex gap-12 items-center">
-          <Link to="login">
+          <Link to="/login">
             <button className="font-semibold">Login</button>
           </Link>
-          <Link to="register">
+          <Link to="/register">
             <button
-              className={`text-gray-100 px-8 py-4 text-sm bg-${color}-500 rounded-full`}
+              className={`text-gray-100 px-8 py-3 bg-${color}-500 rounded-full`}
             >
               {t("Register")}
             </button>

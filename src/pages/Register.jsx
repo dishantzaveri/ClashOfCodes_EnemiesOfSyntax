@@ -108,7 +108,7 @@ const Register = () => {
 
     var config = {
       method: "post",
-      url: "http://coceos.pythonanywhere.com/accounts/register/",
+      url: "http://127.0.0.1:8000/accounts/register/",
       data: data,
     };
 

@@ -24,7 +24,7 @@ const Login = () => {
     const uuid = user.email.split("@")[0];
     var config = {
       method: "post",
-      url: "http://coceos.pythonanywhere.com/accounts/login/",
+      url: "http://127.0.0.1:8000/accounts/login/",
       data: data,
     };
 
