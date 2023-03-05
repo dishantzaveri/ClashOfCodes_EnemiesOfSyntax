@@ -41,7 +41,10 @@ const Card = ({ data, theme }) => {
   });
 
   const cancelButtonRef = useRef(null);
-
+  const [center, setCenter] = useState({
+    lat: 13.084,
+    lng: 80.24
+  });
   return (
     <div
       key={data.id}
@@ -122,10 +125,7 @@ const Card = ({ data, theme }) => {
               >
                 <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all w-[70vw]">
                   <MapContainer
-                    center={{
-                      lat: data.venue.latitude,
-                      lng: data.venue.longitude,
-                    }}
+                    center={center}
                     zoom="8"
                   >
                     <TileLayer url="https://api.maptiler.com/maps/streets-v2/256/{z}/{x}/{y}.png?key=3DHOohQB1Ufdr3SDSGbf"></TileLayer>
